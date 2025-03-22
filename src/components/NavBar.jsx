@@ -1,9 +1,17 @@
 import { Link } from "react-router-dom";
+import { COLORS } from "../assets/colors";
 
 function Navbar() {
   return (
-    <nav className="p-4 bg-gray-800 text-white flex space-x-4">
-      <Link to="/home" className="hover:text-blue-400">Home</Link>
+    <nav className={`
+      ${COLORS.Color1} 
+      w-full 
+      p-4 
+      flex justify-center 
+      fixed top-0 left-0
+  `}>
+      <Link to="/home" className={`${COLORS.TextColorWhite} p-5`}>Home</Link>
+      <Link to="/Create" className={`${COLORS.TextColorWhite} p-5`}>Create a new block</Link>
     </nav>
   );
 }
