@@ -1,17 +1,18 @@
 import './App.css'
 
 import AppRouter from "./routes/AppRouter"
+import { useState, useEffect } from 'react';
 
 
 
 function App() {
-  return (
-    <div className= "h-screen flex items-center justify-center">
-      <AppRouter />
-    </div>
 
+  return (
+    <>
+    <AppRouter/>    
+    </>
+    
   );
 }
 
-export default App
-
+export default App;
