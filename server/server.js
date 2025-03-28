@@ -1,6 +1,7 @@
 
 const express = require('express');
 const db = require('../server/database/database.js');
+const databaseManager = new db.DatabaseManager
 
 const path = require('path');
 
@@ -10,13 +11,28 @@ const app = express();
 
 const PORT = process.env.PORT || 5100;
 
-app.use(cors());
+// To be able to access the server from the frontend
+app.use(cors({
+  origin: 'http://localhost:5173', // Your frontend's exact URL
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 
 app.use(express.json());
 
-app.get('/home', (req, res) => {
-  res.json({ message: 'Hello from the server!' });
+
+
+
+app.post('/save', (req, res) => {
+  const { title, content, date} = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ message: 'Title and content are required' });
+  }
+  databaseManager.addBlock(title, content, date);
+  res.status(200).json({ message: 'Block saved successfully' });
 });
+
+
 
 app.use(express.static(path.join(__dirname, './dist')));
 
