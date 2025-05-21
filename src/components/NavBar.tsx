@@ -9,8 +9,7 @@ function Navbar() {
       w-full 
       p-4 
       flex justify-center 
-      fixed top-0 left-0
-      z-10
+      absolute top-0 left-0
   `}
     >
       <Link to="/home" className={`${COLORS.TextColorWhite} p-5`}>
