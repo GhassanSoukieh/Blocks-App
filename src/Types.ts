@@ -10,9 +10,10 @@ export type Content = {
 };
 
 export type BlockProps = {
-  id: string;
-  date: Date;
-  content: Content[];
-  color: string;
-  status: string;
+  id?: string | null;
+  date?: Date | null;
+  content?: Content[] | null;
+  color?: string | null;
+  status?: string | null;
+  className?: string | null;
 };

@@ -71,24 +71,20 @@ const BlocksCalendar = ({ className = "" }) => {
   const currentYearAsNumber = currentDate.getFullYear();
   const currentDayAsNumber = currentDate.getDate();
 
-  const calendar = (showthisMonth) => {
+  const calendar = (showthisMonth: number) => {
     const firstDayOfMonth = new Date(currentYear, showthisMonth, 1);
     const lastDayOfMonth = new Date(
       currentYear,
       showthisMonth + 1,
       0
     ).getDate();
-    const daysInMonth: number[] = [];
+    const daysInMonth: Date[] = [];
 
     for (let i = 1; i <= lastDayOfMonth; i++) {
-      daysInMonth.push(i);
+      const day = new Date(currentYear, showthisMonth, i);
+      daysInMonth.push(day);
     }
     return daysInMonth;
-  };
-
-  const getDayName = (day: number) => {
-    const result = new Date(currentYear, currentMonth, day).getDay();
-    return days[(result + 6) % 7];
   };
 
   const calander = calendar(currentMonth);
@@ -113,7 +109,7 @@ const BlocksCalendar = ({ className = "" }) => {
 
   return (
     <>
-      <div className={`grid grid-cols-2 gap-3 pt-30 ${className}`}>
+      <div className={`grid grid-cols-1 gap-3 pt-30 ${className}`}>
         <div className="col-span-full bg-amber-600 text-4xl felx flex-col">
           {currentYear}-{currentMonth + 1}-{currentDay}
           <div className="flex flex-row gap-10 justify-between">
@@ -133,37 +129,17 @@ const BlocksCalendar = ({ className = "" }) => {
           </div>
         </div>
         {calander.map((day, index) => {
-          const clickedDate = () => {
-            const results = {
-              year: currentYear,
-              month: currentMonth + 1,
-              day: day,
-            };
-            return results;
-          };
-          const today = new Date();
-          const isToday =
-            day === today.getDate() &&
-            currentMonth === today.getMonth() &&
-            currentYear === today.getFullYear();
+          const isCurrentDate =
+            day.getFullYear() === currentDate.getFullYear() &&
+            day.getMonth() === currentDate.getMonth() &&
+            day.getDate() === currentDate.getDate();
           return (
-            <div
-              onClick={() => {
-                const dateObj = clickedDate();
-                console.log(dateObj);
-              }}
-              key={index}
-              className={` items-center gap-2 border-1 col-span-2 text-xs ${
-                isToday ? "bg-red-600 text-white" : ""
-              }${
-                getDayName(day) === "Saturday" || getDayName(day) === "Sunday"
-                  ? "bg-blue-400 text-white "
-                  : ""
-              }`}
-            >
-              <div>{day}</div>
-              <div>{getDayName(day)}</div>
-            </div>
+            <Block
+              id="index"
+              color="red"
+              date={day}
+              className={isCurrentDate ? "bg-amber-600" : ""}
+            />
           );
         })}
       </div>
