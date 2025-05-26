@@ -1,5 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import Block from "./Block";
+import db from "../../db.ts";
+import { BlockProps } from "../Types.ts";
 
 const arrowLeft = (
   <svg
@@ -65,11 +67,19 @@ const BlocksCalendar = ({ className = "" }) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
+  const [blocks, setBlocks] = useState<any[]>([]);
 
   const monthName = months[currentDate.getMonth()];
   const monthAsNumber = currentDate.getMonth() + 1;
   const currentYearAsNumber = currentDate.getFullYear();
   const currentDayAsNumber = currentDate.getDate();
+
+  const getContentForCalendar = async () => {
+    const content = await db.get("content");
+    console.log("Content for calendar:", content);
+  };
+
+  const assignContentToDays = (content: any[]) => {};
 
   const calendar = (showthisMonth: number) => {
     const firstDayOfMonth = new Date(currentYear, showthisMonth, 1);
@@ -107,9 +117,13 @@ const BlocksCalendar = ({ className = "" }) => {
     }
   };
 
+  useEffect(() => {
+    getContentForCalendar();
+  }, []);
+
   return (
     <>
-      <div className={`grid grid-cols-1 gap-3 pt-30 ${className}`}>
+      <div className={`grid grid-cols-1 gap-3  ${className}`}>
         <div className="col-span-full bg-amber-600 text-4xl felx flex-col">
           {currentYear}-{currentMonth + 1}-{currentDay}
           <div className="flex flex-row gap-10 justify-between">
@@ -133,9 +147,15 @@ const BlocksCalendar = ({ className = "" }) => {
             day.getFullYear() === currentDate.getFullYear() &&
             day.getMonth() === currentDate.getMonth() &&
             day.getDate() === currentDate.getDate();
+          const newBlock: BlockProps = {
+            id: day.toISOString(),
+            date: day,
+          };
+          setBlocks((prev) => [...prev, newBlock]);
           return (
             <Block
-              id="index"
+              key={day.toISOString()}
+              id={day.toISOString()}
               color="red"
               date={day}
               className={isCurrentDate ? "bg-amber-600" : ""}

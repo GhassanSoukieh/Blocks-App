@@ -5,12 +5,14 @@ export type DateType = {
 };
 
 export type Content = {
+  id: string;
   title: string;
   text: string;
+  date: Date;
 };
 
 export type BlockProps = {
-  id?: string | null;
+  id: string | null;
   date?: Date | null;
   content?: Content[] | null;
   color?: string | null;
