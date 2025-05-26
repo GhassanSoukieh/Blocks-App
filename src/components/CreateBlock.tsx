@@ -1,28 +1,28 @@
 import React, { useState } from "react";
-import { Content } from "../Types";
+import { BlockProps } from "../Types";
 import db from "../../db.ts";
 
-type ContentBlockProps = {
+type CreateBlockProps = {
   className?: string;
 };
 
-const ContentBlock = (props: ContentBlockProps) => {
+const CreateBlock = (props: CreateBlockProps) => {
   const [title, setTitle] = useState("New Block");
   const [text, setText] = useState("");
-  const [date, setDate] = useState(new Date());
-  let data: Content;
+  const [date, setDate] = useState<string>("");
+  let data: BlockProps;
 
   const handleCreate = async () => {
     data = {
       id: crypto.randomUUID(),
       title,
       text,
-      date,
+      date: date ? new Date(date) : undefined,
     };
-    await db.add("content", data);
+    await db.add("Blocks", data);
     setTitle("New Block");
     setText("");
-    setDate(new Date());
+    setDate("");
   };
 
   return (
@@ -43,6 +43,8 @@ const ContentBlock = (props: ContentBlockProps) => {
         <div className="col-span-full">
           <input
             type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
             className="bg-white rounded px-2 py-1 border border-gray-300 focus:outline-none focus:border-amber-400 text-gray-800"
           />
         </div>
@@ -56,4 +58,4 @@ const ContentBlock = (props: ContentBlockProps) => {
   );
 };
 
-export default ContentBlock;
+export default CreateBlock;

@@ -23,7 +23,11 @@ const Block = (props: BlockProps) => {
 
   return (
     <div
+      onClick={() => {
+        console.log("Block clicked", props.title);
+      }}
       className={`border-1 transition duration-200 hover:scale-110 rounded-2xl ${props.className}`}
+      style={{ backgroundColor: props.color || undefined }}
     >
       {dateNumber}
       <div> {dayName}</div>

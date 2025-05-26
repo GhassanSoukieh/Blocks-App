@@ -1,18 +1,7 @@
 import React from "react";
-import { Content } from "../Types";
 
 type PlusIconProps = {
   className?: string;
-};
-
-const handleClick = () => {
-  let data: Content;
-  data = {
-    id: crypto.randomUUID(),
-    title: "New Block",
-    text: "This is a new block.",
-    date: new Date(),
-  };
 };
 
 const PlusIcon = (props?: PlusIconProps) => (

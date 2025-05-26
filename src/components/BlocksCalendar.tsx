@@ -67,19 +67,22 @@ const BlocksCalendar = ({ className = "" }) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
-  const [blocks, setBlocks] = useState<any[]>([]);
+  const [blocks, setBlocks] = useState<BlockProps[]>([]);
+
+  const fetchBlocks = async () => {
+    try {
+      const allBlocks = await db.get("Blocks");
+      setBlocks(allBlocks ?? []);
+      console.log("Blocks fetched successfully");
+    } catch (error) {
+      console.error("Error fetching blocks:", error);
+    }
+  };
 
   const monthName = months[currentDate.getMonth()];
   const monthAsNumber = currentDate.getMonth() + 1;
   const currentYearAsNumber = currentDate.getFullYear();
   const currentDayAsNumber = currentDate.getDate();
-
-  const getContentForCalendar = async () => {
-    const content = await db.get("content");
-    console.log("Content for calendar:", content);
-  };
-
-  const assignContentToDays = (content: any[]) => {};
 
   const calendar = (showthisMonth: number) => {
     const firstDayOfMonth = new Date(currentYear, showthisMonth, 1);
@@ -118,7 +121,7 @@ const BlocksCalendar = ({ className = "" }) => {
   };
 
   useEffect(() => {
-    getContentForCalendar();
+    fetchBlocks();
   }, []);
 
   return (
@@ -147,18 +150,32 @@ const BlocksCalendar = ({ className = "" }) => {
             day.getFullYear() === currentDate.getFullYear() &&
             day.getMonth() === currentDate.getMonth() &&
             day.getDate() === currentDate.getDate();
-          const newBlock: BlockProps = {
-            id: day.toISOString(),
-            date: day,
-          };
-          setBlocks((prev) => [...prev, newBlock]);
+
+          const blockForDay = blocks.find((block) => {
+            if (!block.date) return false;
+            // Handle Firestore Timestamp or string/Date
+            const blockDate =
+              typeof (block.date as any).toDate === "function"
+                ? (block.date as any).toDate()
+                : new Date(block.date);
+            return (
+              blockDate.getFullYear() === day.getFullYear() &&
+              blockDate.getMonth() === day.getMonth() &&
+              blockDate.getDate() === day.getDate()
+            );
+          });
+
+          const blockColor = blockForDay ? "red" : undefined;
+
           return (
             <Block
               key={day.toISOString()}
-              id={day.toISOString()}
-              color="red"
+              id={blockForDay?.id || day.toISOString()}
               date={day}
-              className={isCurrentDate ? "bg-amber-600" : ""}
+              text={blockForDay?.text || "empty"}
+              title={blockForDay?.title || "empty"}
+              color={blockColor}
+              className={`border-1 transition duration-200 hover:scale-110 rounded-2xl`}
             />
           );
         })}

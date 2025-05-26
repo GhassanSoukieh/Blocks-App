@@ -4,13 +4,10 @@ import db from "../../db";
 import PlusIcon from "../icons/plus";
 import Block from "../components/Block";
 import { BlockProps } from "../Types.ts";
-import ContentBlock from "../components/ContentBlock";
+import CreateBlock from "../components/CreateBlock.tsx";
 
 const CreateView = () => {
-
-  const handleCreateButton = () => {
-    
-  };
+  const handleCreateButton = () => {};
 
   const [showCreateBlock, setShowCreateBlock] = useState(false);
   return (
@@ -30,7 +27,7 @@ const CreateView = () => {
                 : "transition-all duration-300 opacity-0 scale-95 pointer-events-none h-0 overflow-hidden"
             }
           >
-            <ContentBlock />
+            <CreateBlock />
           </div>
         </div>
       </div>
