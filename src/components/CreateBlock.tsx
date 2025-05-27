@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { BlockProps } from "../Types";
+import { BlockProps, Content } from "../Types";
 import db from "../../db.ts";
 import PlusIcon from "../icons/plus.tsx";
 
@@ -10,21 +10,21 @@ type CreateBlockProps = {
 const CreateBlock = (props: CreateBlockProps) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [date, setDate] = useState<string>("");
-  let data: BlockProps;
+  const [date, setDate] = useState<Date>();
+  let newContent: Content;
   const [showCreateBlock, setShowCreateBlock] = useState(false);
 
   const handleCreate = async () => {
-    data = {
+    newContent = {
       id: crypto.randomUUID(),
       title,
       text,
-      date: date ? new Date(date) : undefined,
+      date: date!,
     };
-    await db.add("Blocks", data);
+    await db.add("Content", newContent);
     setTitle("");
     setText("");
-    setDate("");
+    setDate(undefined);
     setShowCreateBlock(false);
   };
 
@@ -61,8 +61,10 @@ const CreateBlock = (props: CreateBlockProps) => {
             <div className="col-span-full">
               <input
                 type="date"
-                value={date}
-                onChange={(e) => setDate(e.target.value)}
+                value={date ? date.toISOString().split("T")[0] : ""}
+                onChange={(e) =>
+                  setDate(e.target.value ? new Date(e.target.value) : undefined)
+                }
                 className="bg-white rounded px-2 py-1 border border-gray-300 focus:outline-none focus:border-amber-400 text-gray-800"
               />
             </div>

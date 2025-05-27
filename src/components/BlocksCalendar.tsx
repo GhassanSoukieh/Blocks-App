@@ -1,7 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import Block from "./Block";
 import db from "../../db.ts";
-import { BlockProps } from "../Types.ts";
+import { BlockProps, Content } from "../Types.ts";
 
 const arrowLeft = (
   <svg
@@ -67,12 +67,12 @@ const BlocksCalendar = ({ className = "" }) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
-  const [blocks, setBlocks] = useState<BlockProps[]>([]);
+  const [contents, setContents] = useState<Content[]>([]);
 
-  const fetchBlocks = async () => {
+  const fetchContent = async () => {
     try {
-      const allBlocks = await db.get("Blocks");
-      setBlocks(allBlocks ?? []);
+      const allBlocks = await db.get("Content");
+      setContents(allBlocks ?? []);
       console.log("Blocks fetched successfully");
     } catch (error) {
       console.error("Error fetching blocks:", error);
@@ -121,7 +121,7 @@ const BlocksCalendar = ({ className = "" }) => {
   };
 
   useEffect(() => {
-    fetchBlocks();
+    fetchContent();
   }, []);
 
   return (
@@ -151,31 +151,18 @@ const BlocksCalendar = ({ className = "" }) => {
             day.getMonth() === currentDate.getMonth() &&
             day.getDate() === currentDate.getDate();
 
-          const blockForDay = blocks.find((block) => {
-            if (!block.date) return false;
-            // Handle Firestore Timestamp or string/Date
-            const blockDate =
-              typeof (block.date as any).toDate === "function"
-                ? (block.date as any).toDate()
-                : new Date(block.date);
-            return (
-              blockDate.getFullYear() === day.getFullYear() &&
-              blockDate.getMonth() === day.getMonth() &&
-              blockDate.getDate() === day.getDate()
-            );
+          const contentDay = contents.find((content) => {
+            if (content.date === day) {
+              return content;
+            }
           });
-
-          const blockColor = blockForDay ? "red" : undefined;
 
           return (
             <Block
-              key={day.toISOString()}
-              id={blockForDay?.id || day.toISOString()}
+              id={day.toString()}
+              content={contentDay ? [contentDay] : null}
+              key={day.toString()}
               date={day}
-              text={blockForDay?.text || "empty"}
-              title={blockForDay?.title || "empty"}
-              color={blockColor}
-              className={`border-1 transition duration-200 hover:scale-110 rounded-2xl`}
             />
           );
         })}

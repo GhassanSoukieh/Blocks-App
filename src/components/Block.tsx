@@ -19,13 +19,11 @@ const getDayName = (date: Date) => {
 
 const Block = (props: BlockProps) => {
   const dateNumber = props.date?.getDate();
-  const dayName = getDayName(props.date!);
+  const dayName = getDayName(props.date);
 
   return (
     <div
-      onClick={() => {
-        console.log("Block clicked", props.title);
-      }}
+      onClick={() => {}}
       className={`border-1 transition duration-200 hover:scale-110 rounded-2xl ${props.className}`}
       style={{ backgroundColor: props.color || undefined }}
     >

@@ -4,12 +4,18 @@ export type DateType = {
   day: number;
 };
 
+export type Content = {
+  id: string;
+  title: string;
+  text: string;
+  date: Date;
+};
+
 export type BlockProps = {
-  id: string | null;
-  date?: Date | null;
+  id: string;
+  date: Date;
   color?: string | null;
   status?: string | null;
   className?: string | null;
-  text?: string | null;
-  title?: string | null;
+  content?: Content[] | null;
 };
