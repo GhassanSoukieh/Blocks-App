@@ -88,6 +88,14 @@ const BlocksCalendar = ({ className = "" }) => {
     }
   };
 
+  const isSameDay = (a: Date, b: Date) => {
+    return (
+      a.getFullYear() === b.getFullYear() &&
+      a.getMonth() === b.getMonth() &&
+      a.getDate() === b.getDate()
+    );
+  };
+
   const monthName = months[currentDate.getMonth()];
   const monthAsNumber = currentDate.getMonth() + 1;
   const currentYearAsNumber = currentDate.getFullYear();
@@ -162,20 +170,25 @@ const BlocksCalendar = ({ className = "" }) => {
 
           const contentDay = contents.filter((content) => {
             const ConvertedDate = toDate(content.date);
-            if (ConvertedDate.getDate === day.getDate) {
-              console.log("match found");
-              return content;
-            }
+            return isSameDay(ConvertedDate, day);
           });
 
           return (
-            <Block
-              id={day.toString()}
-              content={contentDay ? contentDay : null}
-              key={day.toString()}
-              date={day}
-              color={isCurrentDate ? "rgba(255, 165, 0, 0.5)" : null}
-            />
+            <div
+              className="flex flex-row gap-1 items-center w-full"
+              key={index}
+            >
+              {isCurrentDate ? <div>Today</div> : null}
+
+              <Block
+                id={day.toString()}
+                content={contentDay.length > 0 ? contentDay : null}
+                key={day.toString()}
+                date={day}
+                color={contentDay.length > 0 ? "#e03a15" : ""}
+                className="w-full"
+              />
+            </div>
           );
         })}
       </div>
