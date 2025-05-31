@@ -2,6 +2,7 @@ import React, { useState, useEffect, use } from "react";
 import Block from "./Block";
 import db from "../../db.ts";
 import { BlockProps, Content } from "../Types.ts";
+import { Timestamp } from "firebase/firestore";
 
 const arrowLeft = (
   <svg
@@ -36,6 +37,14 @@ const arrowRight = (
     />
   </svg>
 );
+
+const toDate = (data: any): Date => {
+  if (data instanceof Date) return data;
+  if (data && typeof data === "object" && "seconds" in data) {
+    return new Date(data.seconds * 1000);
+  }
+  return new Date(data);
+};
 
 const BlocksCalendar = ({ className = "" }) => {
   const days = [
@@ -151,8 +160,10 @@ const BlocksCalendar = ({ className = "" }) => {
             day.getMonth() === currentDate.getMonth() &&
             day.getDate() === currentDate.getDate();
 
-          const contentDay = contents.find((content) => {
-            if (content.date === day) {
+          const contentDay = contents.filter((content) => {
+            const ConvertedDate = toDate(content.date);
+            if (ConvertedDate.getDate === day.getDate) {
+              console.log("match found");
               return content;
             }
           });
@@ -160,9 +171,10 @@ const BlocksCalendar = ({ className = "" }) => {
           return (
             <Block
               id={day.toString()}
-              content={contentDay ? [contentDay] : null}
+              content={contentDay ? contentDay : null}
               key={day.toString()}
               date={day}
+              color={isCurrentDate ? "rgba(255, 165, 0, 0.5)" : null}
             />
           );
         })}

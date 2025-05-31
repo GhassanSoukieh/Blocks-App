@@ -23,7 +23,9 @@ const Block = (props: BlockProps) => {
 
   return (
     <div
-      onClick={() => {}}
+      onClick={() => {
+        console.log(props.content);
+      }}
       className={`border-1 transition duration-200 hover:scale-110 rounded-2xl ${props.className}`}
       style={{ backgroundColor: props.color || undefined }}
     >
