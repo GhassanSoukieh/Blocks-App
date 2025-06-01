@@ -14,10 +14,9 @@ const BlockDetails = (props: BlockDetailsProps) => {
           key={content.id}
           className="p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
         >
-          gfgf
           <h3 className="text-xl font-semibold">{content.title}</h3>
-          <p className="text-gray-700">{content.text}</p>
-          <p className="text-sm text-gray-500"></p>
+          <p className="text-gray-100">{content.text}</p>
+          <p className="text-sm text-gray-200"></p>
         </div>
       ))}
     </div>

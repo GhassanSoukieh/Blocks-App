@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { BlockProps, Content } from "../Types";
 import db from "../../db.ts";
 import PlusIcon from "../icons/plus.tsx";
@@ -14,6 +14,7 @@ const CreateBlock = (props: CreateBlockProps) => {
   const [date, setDate] = useState<Date>();
   let newContent: Content;
   const [showCreateBlock, setShowCreateBlock] = useState(false);
+  const titleInputRef = useRef<HTMLInputElement>(null);
 
   const handleCreate = async () => {
     newContent = {
@@ -29,6 +30,23 @@ const CreateBlock = (props: CreateBlockProps) => {
     setShowCreateBlock(false);
     props.onCreate();
   };
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.ctrlKey && e.key === "n") {
+        e.preventDefault();
+        setShowCreateBlock((show) => !show);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    if (showCreateBlock && titleInputRef.current) {
+      titleInputRef.current.focus();
+    }
+  }, [showCreateBlock]);
 
   return (
     <div className={props.className}>
@@ -49,6 +67,7 @@ const CreateBlock = (props: CreateBlockProps) => {
         >
           <div className="bg-amber-800 rounded-2xl shadow-lg grid grid-cols-1 w-full max-w-md mx-auto items-center p-6 gap-4 min-w-90">
             <input
+              ref={titleInputRef}
               className="text-2xl font-bold bg-transparent border-b-2 border-amber-400 focus:outline-none focus:border-white transition-colors col-span-full mb-2 text-white placeholder:text-amber-200"
               value={title}
               onChange={(e) => setTitle(e.target.value)}

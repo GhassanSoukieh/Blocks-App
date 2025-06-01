@@ -85,6 +85,14 @@ const BlocksCalendar = (props: CalendarProps) => {
     );
   };
 
+  const showCurrentDate = () => {
+    const now = new Date();
+    setCurrentDate(now);
+    setCurrentMonth(now.getMonth());
+    setCurrentYear(now.getFullYear());
+    setCurrentDay(now.getDate());
+  };
+
   const monthName = months[currentDate.getMonth()];
   const monthAsNumber = currentDate.getMonth() + 1;
   const currentYearAsNumber = currentDate.getFullYear();
@@ -126,6 +134,17 @@ const BlocksCalendar = (props: CalendarProps) => {
     }
   };
 
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "c") {
+        e.preventDefault();
+        showCurrentDate();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, []);
+
   return (
     <>
       <div className={`grid grid-cols-1 gap-3  ${props.className}`}>
@@ -135,11 +154,7 @@ const BlocksCalendar = (props: CalendarProps) => {
             <div onClick={prevMonth}>{arrowLeft}</div>
             <div
               onClick={() => {
-                const now = new Date();
-                setCurrentDate(now);
-                setCurrentMonth(now.getMonth());
-                setCurrentYear(now.getFullYear());
-                setCurrentDay(now.getDate());
+                showCurrentDate();
               }}
             >
               Current Month

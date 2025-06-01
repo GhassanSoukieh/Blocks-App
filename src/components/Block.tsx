@@ -28,7 +28,7 @@ const Block = (props: BlockProps) => {
   const slash = convertDateToString(props.date);
 
   const handleClick = () => {
-    if (slash && props.content) {
+    if (slash) {
       navigate(`/block/${slash}`, { state: { content: props.content } });
     }
   };
