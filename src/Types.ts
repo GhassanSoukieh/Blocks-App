@@ -19,3 +19,8 @@ export type BlockProps = {
   className?: string | null;
   content?: Content[] | null;
 };
+
+export type CalendarProps = {
+  className?: string;
+  contents?: Content[];
+};

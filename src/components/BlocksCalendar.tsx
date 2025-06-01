@@ -1,7 +1,7 @@
 import React, { useState, useEffect, use } from "react";
 import Block from "./Block";
 import db from "../../db.ts";
-import { BlockProps, Content } from "../Types.ts";
+import { BlockProps, Content, CalendarProps } from "../Types.ts";
 import { Timestamp } from "firebase/firestore";
 
 const arrowLeft = (
@@ -46,7 +46,7 @@ const toDate = (data: any): Date => {
   return new Date(data);
 };
 
-const BlocksCalendar = ({ className = "" }) => {
+const BlocksCalendar = (props: CalendarProps) => {
   const days = [
     "Monday",
     "Tuesday",
@@ -76,17 +76,6 @@ const BlocksCalendar = ({ className = "" }) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
-  const [contents, setContents] = useState<Content[]>([]);
-
-  const fetchContent = async () => {
-    try {
-      const allBlocks = await db.get("Content");
-      setContents(allBlocks ?? []);
-      console.log("Blocks fetched successfully");
-    } catch (error) {
-      console.error("Error fetching blocks:", error);
-    }
-  };
 
   const isSameDay = (a: Date, b: Date) => {
     return (
@@ -137,13 +126,9 @@ const BlocksCalendar = ({ className = "" }) => {
     }
   };
 
-  useEffect(() => {
-    fetchContent();
-  }, []);
-
   return (
     <>
-      <div className={`grid grid-cols-1 gap-3  ${className}`}>
+      <div className={`grid grid-cols-1 gap-3  ${props.className}`}>
         <div className="col-span-full bg-amber-600 text-4xl felx flex-col">
           {currentYear}-{currentMonth + 1}-{currentDay}
           <div className="flex flex-row gap-10 justify-between">
@@ -168,7 +153,7 @@ const BlocksCalendar = ({ className = "" }) => {
             day.getMonth() === currentDate.getMonth() &&
             day.getDate() === currentDate.getDate();
 
-          const contentDay = contents.filter((content) => {
+          const contentDay = props.contents?.filter((content) => {
             const ConvertedDate = toDate(content.date);
             return isSameDay(ConvertedDate, day);
           });
@@ -182,10 +167,12 @@ const BlocksCalendar = ({ className = "" }) => {
 
               <Block
                 id={day.toString()}
-                content={contentDay.length > 0 ? contentDay : null}
+                content={
+                  contentDay && contentDay.length > 0 ? contentDay : null
+                }
                 key={day.toString()}
                 date={day}
-                color={contentDay.length > 0 ? "#e03a15" : ""}
+                color={(contentDay?.length ?? 0) > 0 ? "#e03a15" : ""}
                 className="w-full"
               />
             </div>

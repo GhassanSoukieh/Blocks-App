@@ -5,6 +5,7 @@ import PlusIcon from "../icons/plus.tsx";
 
 type CreateBlockProps = {
   className?: string;
+  onCreate: () => void;
 };
 
 const CreateBlock = (props: CreateBlockProps) => {
@@ -26,6 +27,7 @@ const CreateBlock = (props: CreateBlockProps) => {
     setText("");
     setDate(undefined);
     setShowCreateBlock(false);
+    props.onCreate();
   };
 
   return (
