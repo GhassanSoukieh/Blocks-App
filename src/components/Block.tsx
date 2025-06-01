@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import { BlockProps } from "../Types.ts";
+import { useNavigate } from "react-router-dom";
+import { convertDateToString } from "../Functions/DateFunctions";
+import BlockDetails from "./BlockDetails.tsx";
 
 const days = [
   "Monday",
@@ -21,10 +24,19 @@ const Block = (props: BlockProps) => {
   const dateNumber = props.date?.getDate();
   const dayName = getDayName(props.date);
 
+  const navigate = useNavigate();
+  const slash = convertDateToString(props.date);
+
+  const handleClick = () => {
+    if (slash && props.content) {
+      navigate(`/block/${slash}`, { state: { content: props.content } });
+    }
+  };
+
   return (
     <div
       onClick={() => {
-        console.log(props.content);
+        handleClick();
       }}
       className={`border-1 transition duration-200 hover:scale-110 rounded-2xl ${props.className}`}
       style={{ backgroundColor: props.color || undefined }}

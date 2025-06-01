@@ -24,3 +24,7 @@ export type CalendarProps = {
   className?: string;
   contents?: Content[];
 };
+
+export type BlockDetailsProps = {
+  contents?: Content[];
+};

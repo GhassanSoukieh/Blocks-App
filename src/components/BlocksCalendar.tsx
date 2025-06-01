@@ -170,8 +170,8 @@ const BlocksCalendar = (props: CalendarProps) => {
                 content={
                   contentDay && contentDay.length > 0 ? contentDay : null
                 }
-                key={day.toString()}
                 date={day}
+                key={day.toString()}
                 color={(contentDay?.length ?? 0) > 0 ? "#e03a15" : ""}
                 className="w-full"
               />

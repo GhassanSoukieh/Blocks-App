@@ -3,6 +3,7 @@ import Home from "../Views(routes)/Home";
 import Navbar from "../components/NavBar";
 import BlocksCalendar from "../components/BlocksCalendar";
 import CreateView from "../Views(routes)/CreateView";
+import BlockDetails from "../components/BlockDetails";
 
 function AppRouter() {
   return (
@@ -11,6 +12,7 @@ function AppRouter() {
       <Routes>
         <Route path="/home" element={<Home />} />
         <Route path="/create" element={<CreateView />} />
+        <Route path="/block/:date" element={<BlockDetails />} />
       </Routes>
     </BrowserRouter>
   );
