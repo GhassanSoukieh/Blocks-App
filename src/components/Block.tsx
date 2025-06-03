@@ -22,10 +22,10 @@ const getDayName = (date: Date) => {
 
 const Block = (props: BlockProps) => {
   const dateNumber = props.date?.getDate();
-  const dayName = getDayName(props.date);
+  const dayName = props.date ? getDayName(props.date) : "";
 
   const navigate = useNavigate();
-  const slash = convertDateToString(props.date);
+  const slash = props.date ? convertDateToString(props.date) : "";
 
   const handleClick = () => {
     if (slash) {

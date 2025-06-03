@@ -13,6 +13,7 @@ function AppRouter() {
         <Route path="/home" element={<Home />} />
         <Route path="/create" element={<CreateView />} />
         <Route path="/block/:date" element={<BlockDetails />} />
+        <Route path="/Note:id" element={<BlockDetails />} />
       </Routes>
     </BrowserRouter>
   );

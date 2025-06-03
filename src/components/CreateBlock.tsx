@@ -22,7 +22,7 @@ const CreateBlock = (props: CreateBlockProps) => {
       id: crypto.randomUUID(),
       title,
       text,
-      date: date!,
+      date: date ? new Date(date) : null,
     };
     await db.add("Content", newContent);
     setTitle("");

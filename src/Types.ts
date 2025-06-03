@@ -8,12 +8,12 @@ export type Content = {
   id: string;
   title: string;
   text: string;
-  date: Date;
+  date?: Date | null;
 };
 
 export type BlockProps = {
   id: string;
-  date: Date;
+  date?: Date;
   color?: string | null;
   status?: string | null;
   className?: string | null;
