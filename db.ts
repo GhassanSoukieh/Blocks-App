@@ -1,5 +1,11 @@
 import { database } from "./firebase";
-import { collection, addDoc, getDocs } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  getDocs,
+  deleteDoc,
+  doc,
+} from "firebase/firestore";
 
 const add = async (collectionName: string, data: any) => {
   try {
@@ -22,6 +28,15 @@ const get = async (collectionName: any) => {
     console.error("Error getting documents: ", error);
   }
 };
+const deleteData = async (collectionName: string, id: string) => {
+  try {
+    const docRef = doc(database, collectionName, id);
+    await deleteDoc(docRef);
+    console.log("Document deleted with ID: ", id);
+  } catch (error) {
+    console.error("Error deleting document: ", error);
+  }
+};
 
-const db = { get, add };
+const db = { get, add, deleteData };
 export default db;

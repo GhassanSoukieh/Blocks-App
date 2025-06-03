@@ -6,30 +6,37 @@ import { NoteEditor } from "./NoteEditor.tsx";
 
 type CreateBlockProps = {
   className?: string;
-  onCreate: () => void;
+  onCreate?: () => void;
+  createInsideBlock?: boolean;
+  blockDate?: Date | null | undefined;
 };
 
 const CreateBlock = (props: CreateBlockProps) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
-  const [date, setDate] = useState<Date>();
+
+  const [date, setDate] = useState<Date | undefined>(
+    props.createInsideBlock && props.blockDate ? props.blockDate : undefined
+  );
   let newContent: Content;
   const [showCreateBlock, setShowCreateBlock] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   const handleCreate = async () => {
-    newContent = {
-      id: crypto.randomUUID(),
+    const data = {
       title,
       text,
       date: date ? new Date(date) : null,
     };
-    await db.add("Content", newContent);
+    const docRef = await db.add("Content", data); // db.add should return the docRef
+
     setTitle("");
     setText("");
     setDate(undefined);
     setShowCreateBlock(false);
-    props.onCreate();
+    if (props.onCreate) {
+      props.onCreate();
+    }
   };
 
   useEffect(() => {
@@ -48,6 +55,13 @@ const CreateBlock = (props: CreateBlockProps) => {
       titleInputRef.current.focus();
     }
   }, [showCreateBlock]);
+
+  useEffect(() => {
+    // If createInsideBlock or blockDate changes, update date accordingly
+    if (props.createInsideBlock && props.blockDate) {
+      setDate(props.blockDate);
+    }
+  }, [props.createInsideBlock, props.blockDate]);
 
   return (
     <div className={props.className}>

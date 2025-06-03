@@ -52,7 +52,7 @@ const CreateView = () => {
           <CreateBlock onCreate={handleCreate} />
           <div>
             {noDateContent.map((content, index) => (
-              <ContentBlock content={content} />
+              <ContentBlock content={content} key={content.id} />
             ))}
           </div>
         </div>

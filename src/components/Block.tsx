@@ -29,7 +29,9 @@ const Block = (props: BlockProps) => {
 
   const handleClick = () => {
     if (slash) {
-      navigate(`/block/${slash}`, { state: { content: props.content } });
+      navigate(`/block/${slash}`, {
+        state: { content: props.content, date: props.date },
+      });
     }
   };
 
