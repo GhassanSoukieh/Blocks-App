@@ -136,7 +136,12 @@ const BlocksCalendar = (props: CalendarProps) => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "c") {
+      const target = e.target as HTMLElement;
+      const isInput =
+        target.tagName === "INPUT" ||
+        target.tagName === "TEXTAREA" ||
+        target.isContentEditable;
+      if (!isInput && (e.key === "c" || e.key === "C")) {
         e.preventDefault();
         showCurrentDate();
       }
