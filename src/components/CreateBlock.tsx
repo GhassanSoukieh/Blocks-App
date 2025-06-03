@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { BlockProps, Content } from "../Types";
 import db from "../../db.ts";
 import PlusIcon from "../icons/plus.tsx";
+import { NoteEditor } from "./NoteEditor.tsx";
 
 type CreateBlockProps = {
   className?: string;
@@ -50,7 +51,7 @@ const CreateBlock = (props: CreateBlockProps) => {
 
   return (
     <div className={props.className}>
-      <div className="flex flex-col gap-10 justify-center items-center h-full">
+      <div className="flex flex-col gap-10 justify- items-center h-full">
         <div
           onClick={() => setShowCreateBlock(!showCreateBlock)}
           className="cursor-pointer"
@@ -65,7 +66,7 @@ const CreateBlock = (props: CreateBlockProps) => {
               : "opacity-0 pointer-events-none"
           }`}
         >
-          <div className="bg-amber-800 rounded-2xl shadow-lg grid grid-cols-1 w-full max-w-md mx-auto items-center p-6 gap-4 min-w-90">
+          <div className="bg-amber-800 rounded-2xl shadow-lg grid grid-cols-1 w-full max-w-md mx-auto p-6 gap-4 min-w-90">
             <input
               ref={titleInputRef}
               className="text-2xl font-bold bg-transparent border-b-2 border-amber-400 focus:outline-none focus:border-white transition-colors col-span-full mb-2 text-white placeholder:text-amber-200"
@@ -73,11 +74,10 @@ const CreateBlock = (props: CreateBlockProps) => {
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"
             />
-            <textarea
-              className="w-full bg-gray-100 rounded-md p-2 text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 col-span-full min-h-[60px]"
-              value={text}
-              onChange={(e) => setText(e.target.value)}
-              placeholder="Add your text here..."
+            <NoteEditor
+              className=" w-full bg-gray-100 rounded-md p-2 text-gray-800 resize-none focus:outline-none focus:ring-2 focus:ring-amber-400 col-span-full min-h-[150px] min-w-3xs text-start"
+              onChange={(newText) => setText(newText)}
+              content={text}
             />
             <div className="col-span-full">
               <input
