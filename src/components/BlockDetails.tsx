@@ -6,6 +6,7 @@ import StarterKit from "@tiptap/starter-kit";
 import db from "../../db";
 import CreateBlock from "./CreateBlock.tsx";
 import { convertTimestampToDate } from "../Functions/DateFunctions.ts";
+import { getContentForDate } from "../Functions/DateFunctions.ts";
 
 const BlockDetailItem: React.FC<{
   content: Content;
@@ -34,10 +35,26 @@ const BlockDetailItem: React.FC<{
 
 const BlockDetails = (props: BlockDetailsProps) => {
   const { state } = useLocation();
-  const [contents, setContents] = React.useState<Content[]>(
-    state?.content || props.contents || []
-  );
+  const [contents, setContents] = React.useState<Content[]>([]);
   const date = state?.date;
+  const [update, setUpdate] = React.useState(false);
+
+  // Fetch and update state
+  const fetchContents = async () => {
+    const content = await db.get("Content");
+    const results = getContentForDate(content, date);
+    console.log("Fetched contents for date:", date, results);
+    setContents(results);
+  };
+
+  // Fetch on mount and when update/date changes
+  useEffect(() => {
+    fetchContents();
+  }, [update, date]);
+
+  const updatelist = () => {
+    setUpdate((prev) => !prev);
+  };
 
   const handleDelete = async (id: string) => {
     try {
@@ -64,7 +81,11 @@ const BlockDetails = (props: BlockDetailsProps) => {
         </div>
       )}
 
-      <CreateBlock createInsideBlock={true} blockDate={date} />
+      <CreateBlock
+        createInsideBlock={true}
+        blockDate={date}
+        onCreate={updatelist}
+      />
     </div>
   );
 };
