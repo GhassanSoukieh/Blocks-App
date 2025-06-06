@@ -4,7 +4,7 @@ import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { Navigate, useNavigate } from "react-router-dom";
 
-const ContentBlock = ({ content }: { content: Content }) => {
+const ContentOut = ({ content }: { content: Content }) => {
   const editor = useEditor({
     extensions: [StarterKit],
     content: content.text,
@@ -25,10 +25,9 @@ const ContentBlock = ({ content }: { content: Content }) => {
       className="p-4 border rounded-lg shadow-md hover:shadow-lg transition-shadow duration-200"
       onClick={handleClick}
     >
-      <h3 className="text-xl font-semibold pb-3">{content.title}</h3>
-      <EditorContent editor={editor} className="text-start" />
+      <h3 className="text-xl font-semibold ">{content.title}</h3>
     </div>
   );
 };
 
-export default ContentBlock;
+export default ContentOut;

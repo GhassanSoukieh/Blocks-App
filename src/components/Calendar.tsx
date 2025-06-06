@@ -1,5 +1,5 @@
 import React, { useState, useEffect, use } from "react";
-import Block from "./Block";
+import Day from "./Day.tsx";
 import db from "../../db.ts";
 import { BlockProps, Content, CalendarProps } from "../Types.ts";
 import { Timestamp } from "firebase/firestore";
@@ -46,7 +46,7 @@ const toDate = (data: any): Date => {
   return new Date(data);
 };
 
-const BlocksCalendar = (props: CalendarProps) => {
+const Calendar = (props: CalendarProps) => {
   const days = [
     "Monday",
     "Tuesday",
@@ -153,16 +153,17 @@ const BlocksCalendar = (props: CalendarProps) => {
   return (
     <>
       <div className={`grid grid-cols-1 gap-3  ${props.className}`}>
-        <div className="col-span-full bg-amber-600 text-4xl felx flex-col">
+        <div className="col-span-full  text-4xl felx flex-col">
           {currentYear}-{currentMonth + 1}-{currentDay}
-          <div className="flex flex-row gap-10 justify-between">
+          <div className="flex flex-row gap-10 justify-between pt-10">
             <div onClick={prevMonth}>{arrowLeft}</div>
             <div
+              className="text-sm rounded-3xl border-1 p-4 hover:bg-green-500 transition duration-300 "
               onClick={() => {
                 showCurrentDate();
               }}
             >
-              Current Month
+              Today
             </div>
             <div onClick={nextMonth}>{arrowRight}</div>
           </div>
@@ -183,9 +184,9 @@ const BlocksCalendar = (props: CalendarProps) => {
               className="flex flex-row gap-1 items-center w-full"
               key={index}
             >
-              {isCurrentDate ? <div>Today</div> : null}
+              {isCurrentDate ? <div>{arrowRight}</div> : null}
 
-              <Block
+              <Day
                 id={day.toString()}
                 content={
                   contentDay && contentDay.length > 0 ? contentDay : null
@@ -203,4 +204,4 @@ const BlocksCalendar = (props: CalendarProps) => {
   );
 };
 
-export default BlocksCalendar;
+export default Calendar;

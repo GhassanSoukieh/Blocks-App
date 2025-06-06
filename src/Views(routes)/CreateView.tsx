@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-import BlocksCalendar from "../components/BlocksCalendar";
+import Calendar from "../components/Calendar.tsx";
 import db from "../../db";
-import PlusIcon from "../icons/plus";
-import Block from "../components/Block";
 import { BlockProps, Content } from "../Types.ts";
 import CreateBlock from "../components/CreateBlock.tsx";
-import ContentBlock from "../components/ContentBlock";
+import ContentOut from "../components/ContentOut";
 
 const CreateView = () => {
   const handleCreateButton = () => {};
@@ -45,14 +43,14 @@ const CreateView = () => {
 
   return (
     <div className="grid grid-cols-12 min-h-screen pt-30">
-      <BlocksCalendar className="col-span-3" contents={contents} />
+      <Calendar className="col-span-3" contents={contents} />
 
       <div className="col-start-7 row-start-1 col-span-4 ">
         <div className="flex flex-col gap-10 items-center">
           <CreateBlock onCreate={handleCreate} />
           <div>
             {noDateContent.map((content, index) => (
-              <ContentBlock content={content} key={content.id} />
+              <ContentOut content={content} key={content.id} />
             ))}
           </div>
         </div>

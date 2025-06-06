@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { BlockProps } from "../Types.ts";
 import { useNavigate } from "react-router-dom";
-import { convertDateToString } from "../Functions/DateFunctions";
-import BlockDetails from "./BlockDetails.tsx";
+import { convertDateToString } from "../Functions/DateFunctions.ts";
+import InsideBlockView from "../Views(routes)/InsideBlockView.tsx";
 
 const days = [
   "Monday",
@@ -20,7 +20,7 @@ const getDayName = (date: Date) => {
   return dayName;
 };
 
-const Block = (props: BlockProps) => {
+const Day = (props: BlockProps) => {
   const dateNumber = props.date?.getDate();
   const dayName = props.date ? getDayName(props.date) : "";
 
@@ -49,4 +49,4 @@ const Block = (props: BlockProps) => {
   );
 };
 
-export default Block;
+export default Day;

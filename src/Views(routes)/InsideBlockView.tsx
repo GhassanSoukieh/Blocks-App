@@ -3,8 +3,8 @@ import { BlockDetailsProps, Content } from "../Types.ts";
 import { useLocation } from "react-router-dom";
 import { EditorContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
-import db from "../../db";
-import CreateBlock from "./CreateBlock.tsx";
+import db from "../../db.ts";
+import CreateBlock from "../components/CreateBlock.tsx";
 import { convertTimestampToDate } from "../Functions/DateFunctions.ts";
 import { getContentForDate } from "../Functions/DateFunctions.ts";
 
@@ -33,7 +33,7 @@ const BlockDetailItem: React.FC<{
   );
 };
 
-const BlockDetails = (props: BlockDetailsProps) => {
+const InsideBlockView = (props: BlockDetailsProps) => {
   const { state } = useLocation();
   const [contents, setContents] = React.useState<Content[]>([]);
   const date = state?.date;
@@ -89,4 +89,4 @@ const BlockDetails = (props: BlockDetailsProps) => {
     </div>
   );
 };
-export default BlockDetails;
+export default InsideBlockView;
