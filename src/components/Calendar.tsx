@@ -180,10 +180,7 @@ const Calendar = (props: CalendarProps) => {
           });
 
           return (
-            <div
-              className="flex flex-row gap-1 items-center w-full"
-              key={index}
-            >
+            <div className="flex flex-row gap-1 items-center" key={index}>
               {isCurrentDate ? <div>{arrowRight}</div> : null}
 
               <Day

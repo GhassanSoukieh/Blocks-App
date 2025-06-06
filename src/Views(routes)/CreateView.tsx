@@ -6,7 +6,6 @@ import CreateBlock from "../components/CreateBlock.tsx";
 import ContentOut from "../components/ContentOut";
 
 const CreateView = () => {
-  const handleCreateButton = () => {};
   const [contents, setContents] = useState<Content[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [noDateContent, setNoDateContent] = useState<Content[]>([]);
@@ -42,17 +41,18 @@ const CreateView = () => {
   }, [contents]);
 
   return (
-    <div className="grid grid-cols-12 min-h-screen pt-30">
-      <Calendar className="col-span-3" contents={contents} />
+    <div className="grid grid-cols-12 pt-30">
+      <Calendar className="col-span-2 col-start-1" contents={contents} />
 
-      <div className="col-start-7 row-start-1 col-span-4 ">
-        <div className="flex flex-col gap-10 items-center">
+      <div className="col-start-5 items-center col-span-3 pt-30 flex gap-3 flex-col">
+        {noDateContent.map((content, index) => (
+          <ContentOut content={content} key={content.id} />
+        ))}
+      </div>
+
+      <div className="col-start-9  col-span-1 pt-30  ">
+        <div>
           <CreateBlock onCreate={handleCreate} />
-          <div>
-            {noDateContent.map((content, index) => (
-              <ContentOut content={content} key={content.id} />
-            ))}
-          </div>
         </div>
       </div>
     </div>

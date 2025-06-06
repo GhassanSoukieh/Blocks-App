@@ -65,12 +65,12 @@ const CreateBlock = (props: CreateBlockProps) => {
 
   return (
     <div className={props.className}>
-      <div className="flex flex-col gap-10 justify- items-center h-full">
+      <div className="flex flex-col gap-10  ">
         <div
+          className="p-1  cursor-pointer rounded-2xl bg-green-400"
           onClick={() => setShowCreateBlock(!showCreateBlock)}
-          className="cursor-pointer"
         >
-          <PlusIcon className="w-20" />
+          +
         </div>
 
         <div
@@ -80,10 +80,10 @@ const CreateBlock = (props: CreateBlockProps) => {
               : "opacity-0 pointer-events-none"
           }`}
         >
-          <div className="bg-amber-800 rounded-2xl shadow-lg grid grid-cols-1 w-full max-w-md mx-auto p-6 gap-4 min-w-90">
+          <div className="bg-gray-800 rounded-2xl shadow-lg grid grid-cols-1 w-full max-w-md mx-auto p-6 gap-4 min-w-90">
             <input
               ref={titleInputRef}
-              className="text-2xl font-bold bg-transparent border-b-2 border-amber-400 focus:outline-none focus:border-white transition-colors col-span-full mb-2 text-white placeholder:text-amber-200"
+              className="text-2xl font-bold bg-transparent border-b-2 border-amber-400 focus:outline-none focus:border-white transition-colors col-span-full mb-2 text-white placeholder:text-white"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Title"

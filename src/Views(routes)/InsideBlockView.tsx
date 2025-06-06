@@ -7,6 +7,7 @@ import db from "../../db.ts";
 import CreateBlock from "../components/CreateBlock.tsx";
 import { convertTimestampToDate } from "../Functions/DateFunctions.ts";
 import { getContentForDate } from "../Functions/DateFunctions.ts";
+import ContentOut from "../components/ContentOut.tsx";
 
 const BlockDetailItem: React.FC<{
   content: Content;
@@ -68,13 +69,7 @@ const InsideBlockView = (props: BlockDetailsProps) => {
   return (
     <div className="flex flex-col gap-4">
       {contents.length > 0 ? (
-        contents.map((content) => (
-          <BlockDetailItem
-            key={content.id}
-            content={content}
-            onDelete={handleDelete}
-          />
-        ))
+        contents.map((content) => <ContentOut content={content} />)
       ) : (
         <div className="flex items-center justify-center h-full">
           <p className="text-gray-500">No content available</p>
