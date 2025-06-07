@@ -5,6 +5,7 @@ import {
   getDocs,
   deleteDoc,
   doc,
+  updateDoc,
 } from "firebase/firestore";
 
 const add = async (collectionName: string, data: any) => {
@@ -37,6 +38,15 @@ const deleteData = async (collectionName: string, id: string) => {
     console.error("Error deleting document: ", error);
   }
 };
+const update = async (collectionName: string, id: string, data: any) => {
+  try {
+    const docRef = doc(database, collectionName, id);
+    await updateDoc(docRef, data);
+    console.log("Document updated with ID: ", id);
+  } catch (error) {
+    console.error("Error updating document: ", error);
+  }
+};
 
-const db = { get, add, deleteData };
+const db = { get, add, deleteData, update };
 export default db;
