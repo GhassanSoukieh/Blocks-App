@@ -8,6 +8,7 @@ import CreateBlock from "../components/CreateBlock.tsx";
 import { convertTimestampToDate } from "../Functions/DateFunctions.ts";
 import { fetchAndFilterContentByDate } from "../Functions/DateFunctions";
 import ContentOut from "../components/ContentOut.tsx";
+import BackPage from "../components/BackPage.tsx";
 
 const BlockDetailItem: React.FC<{
   content: Content;
@@ -70,8 +71,9 @@ const InsideBlockView = (props: BlockDetailsProps) => {
 
   return (
     <div className="flex flex-col gap-4">
+      <BackPage />
       {contents.length > 0 ? (
-        contents.map((content) => <ContentOut content={content} />)
+        contents.map((content) => <ContentOut content={content}/>)
       ) : (
         <div className="flex items-center justify-center h-full">
           <p className="text-gray-500">No content available</p>

@@ -152,7 +152,7 @@ const Calendar = (props: CalendarProps) => {
 
   return (
     <>
-      <div className={`grid grid-cols-1 gap-3  ${props.className}`}>
+      <div className={`grid grid-cols-1 gap-2  ${props.className}`}>
         <div className="col-span-full  text-4xl felx flex-col">
           {currentYear}-{currentMonth + 1}-{currentDay}
           <div className="flex flex-row gap-10 justify-between pt-10">
@@ -180,9 +180,8 @@ const Calendar = (props: CalendarProps) => {
           });
 
           return (
-            <div className="flex flex-row gap-1 items-center" key={index}>
+            <div className="flex flex-row items-center" key={index}>
               {isCurrentDate ? <div>{arrowRight}</div> : null}
-
               <Day
                 id={day.toString()}
                 content={

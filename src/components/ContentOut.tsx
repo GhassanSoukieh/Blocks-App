@@ -10,7 +10,7 @@ import { fetchAndFilterContentByDate } from "../Functions/DateFunctions";
 import db from "../../db.ts";
 
 
-const ContentOut = (props : {content : Content , onDelete : ()=> void}) => {
+const ContentOut = (props : {content : Content , onDelete? : ()=> void}) => {
 
 const location = useLocation();
 const contentFromState = location.state?.content || {};
@@ -36,14 +36,14 @@ const handleEyeClick = () => {
 
   return (
     
-    <div className="flex flex-row gap-4" onClick={handleOnClick}>
+    <div className="flex flex-row gap-10" onClick={handleOnClick}>
       <div className="border p-3 rounded-lg shadow-md bg-white dark:bg-gray-800 w-full text-sm">
         {props.content.title}
       </div>
     {showOptions && (
-      <div className="flex flex-row gap-5 items-center text-lg">
-     <FaTrash onClick={()=> {db.deleteData("Content",props.content.id); props.onDelete()}}/>
+      <div className="flex flex-row gap-10 items-center text-xl">
       <FaEye onClick={handleEyeClick}/>
+     <FaTrash onClick={()=> {db.deleteData("Content",props.content.id); props.onDelete()}}/>
      
     </div>
      
