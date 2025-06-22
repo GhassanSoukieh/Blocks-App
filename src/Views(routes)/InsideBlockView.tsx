@@ -6,7 +6,7 @@ import StarterKit from "@tiptap/starter-kit";
 import db from "../../db.ts";
 import CreateBlock from "../components/CreateBlock.tsx";
 import { convertTimestampToDate } from "../Functions/DateFunctions.ts";
-import { getContentForDate } from "../Functions/DateFunctions.ts";
+import { fetchAndFilterContentByDate } from "../Functions/DateFunctions";
 import ContentOut from "../components/ContentOut.tsx";
 
 const BlockDetailItem: React.FC<{
@@ -43,9 +43,9 @@ const InsideBlockView = (props: BlockDetailsProps) => {
   // Fetch and update state
   const fetchContents = async () => {
     const content = await db.get("Content");
-    const results = getContentForDate(content, date);
+    const results = fetchAndFilterContentByDate( date);
     console.log("Fetched contents for date:", date, results);
-    setContents(results);
+    setContents(await results);
   };
 
   // Fetch on mount and when update/date changes
@@ -58,6 +58,8 @@ const InsideBlockView = (props: BlockDetailsProps) => {
   };
 
   const handleDelete = async (id: string) => {
+     const windowConfirm = window.confirm("Are you sure you want to delete this content? This action cannot be undone.")
+      if (!windowConfirm) return;
     try {
       await db.deleteData("Content", id);
       setContents((prev) => prev.filter((c) => c.id !== id));

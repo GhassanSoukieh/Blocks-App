@@ -7,6 +7,8 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
+import { Content } from "./src/Types";
+import { fetchAndFilterContentByDate } from "./src/Functions/DateFunctions";
 
 const add = async (collectionName: string, data: any) => {
   try {
@@ -30,11 +32,16 @@ const get = async (collectionName: any) => {
   }
 };
 const deleteData = async (collectionName: string, id: string) => {
+  const confirmed = window.confirm("Are you sure you want to delete this item?");
+  if (!confirmed) return;
+
   try {
     const docRef = doc(database, collectionName, id);
     await deleteDoc(docRef);
+    window.alert("Document deleted successfully!");
     console.log("Document deleted with ID: ", id);
   } catch (error) {
+    window.alert("Error deleting document.");
     console.error("Error deleting document: ", error);
   }
 };
@@ -47,6 +54,19 @@ const update = async (collectionName: string, id: string, data: any) => {
     console.error("Error updating document: ", error);
   }
 };
+
+const getDataForDate = async (date: Date): Promise<Content[]> => {
+  const collectionName = "Content";
+  try {
+    const allData = await get(collectionName);
+    console.log("Data fetched for date: ", date);
+    const results = fetchAndFilterContentByDate(date);
+    return results;
+  } catch (error) {
+    console.error("Error fetching data for date: ", error);
+    return [];
+  }
+}
 
 const db = { get, add, deleteData, update };
 export default db;

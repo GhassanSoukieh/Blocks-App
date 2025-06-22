@@ -20,21 +20,9 @@ const CreateView = () => {
     }
   };
 
-  const handleDelete = async (id: string) => {
-    const confirmDelete = window.confirm(
-      "Are you sure you want to delete this content? This action cannot be undone."
-    );
-
-    if (!confirmDelete) return;
-
-    try {
-      await db.deleteData("Content", id);
-      setContents((prevContents) =>
-        prevContents.filter((item) => item.id !== id)
-      );
-    } catch (error) {
-      console.error("Failed to delete item", error);
-    }
+  const handleDelete = () => {
+    setRefresh((currentState) => !currentState);
+    console.log("Content deleted, refresh triggered");
   };
 
   const handleCreate = () => {

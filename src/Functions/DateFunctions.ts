@@ -1,4 +1,5 @@
 import { Content } from "../Types";
+import db from "../../db"; // Adjust the import path as necessary
 
 export const convertDateToString = (date: any): string => {
   // Robustly handle Firestore Timestamp, string, or Date
@@ -40,15 +41,20 @@ export function convertTimestampToDate(ts: any): Date | undefined {
   return undefined;
 }
 
-export function getContentForDate(
-  contents: Content[] | undefined,
-  date: Date
-): Content[] {
-  if (!contents || contents.length === 0) return [];
-
-  const dateString = convertDateToString(date);
-  return contents.filter((content) => {
-    const contentDate = content.date ? convertDateToString(content.date) : null;
-    return contentDate === dateString;
-  });
+export async function fetchAndFilterContentByDate(date: Date): Promise<Content[]> {
+  const collectionName = "Content";
+  try {
+    const allContent = await db.get(collectionName);
+    const dateString = convertDateToString(date);
+    if (!allContent) {
+      return [];
+    }
+    return allContent.filter((content: Content) => {
+      const contentDate = content.date ? convertDateToString(content.date) : null;
+      return contentDate === dateString;
+    });
+  } catch (error) {
+    console.error("Error fetching or filtering content:", error);
+    return [];
+  }
 }
