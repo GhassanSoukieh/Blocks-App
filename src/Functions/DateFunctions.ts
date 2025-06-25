@@ -58,3 +58,9 @@ export async function fetchAndFilterContentByDate(date: Date): Promise<Content[]
     return [];
   }
 }
+
+export function toLocalDateInputValue(date: Date) {
+  const offset = date.getTimezoneOffset();
+  const localDate = new Date(date.getTime() - offset * 60 * 1000);
+  return localDate.toISOString().split("T")[0];
+}

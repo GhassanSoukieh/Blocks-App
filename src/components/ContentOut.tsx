@@ -29,8 +29,6 @@ const handleEyeClick = () => {
   navigator(`/note/${props.content.id}`, {
     state: { content: props.content },
   });
-
-  
 }
 
 

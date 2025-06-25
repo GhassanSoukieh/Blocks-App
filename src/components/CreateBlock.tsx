@@ -3,6 +3,7 @@ import { BlockProps, Content } from "../Types";
 import db from "../../db.ts";
 import PlusIcon from "../icons/plus.tsx";
 import { NoteEditor } from "./NoteEditor.tsx";
+import { toLocalDateInputValue } from "../Functions/DateFunctions.ts";
 
 type CreateBlockProps = {
   className?: string;
@@ -10,6 +11,7 @@ type CreateBlockProps = {
   createInsideBlock?: boolean;
   blockDate?: Date | null | undefined;
 };
+
 
 const CreateBlock = (props: CreateBlockProps) => {
   const [title, setTitle] = useState("");
@@ -96,7 +98,7 @@ const CreateBlock = (props: CreateBlockProps) => {
             <div className="col-span-full">
               <input
                 type="date"
-                value={date ? date.toISOString().split("T")[0] : ""}
+                value={date ? toLocalDateInputValue(date) : ""}
                 onChange={(e) =>
                   setDate(e.target.value ? new Date(e.target.value) : undefined)
                 }
