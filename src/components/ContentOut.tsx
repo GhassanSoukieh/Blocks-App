@@ -43,7 +43,10 @@ const handleEyeClick = () => {
     {showOptions && (
       <div className="flex flex-row gap-10 items-center text-xl">
       <FaEye onClick={handleEyeClick}/>
-     <FaTrash onClick={()=> {db.deleteData("Content",props.content.id); props.onDelete()}}/>
+     <FaTrash onClick={() => {
+       db.deleteData("Content", props.content.id);
+       if (props.onDelete) props.onDelete();
+     }}/>
      
     </div>
      
