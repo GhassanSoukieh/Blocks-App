@@ -1,9 +1,10 @@
 import React, { useState, useEffect, useRef } from "react";
-import { BlockProps, Content } from "../Types";
+import { BlockProps, Content, Type } from "../Types";
 import db from "../../db.ts";
 import PlusIcon from "../icons/plus.tsx";
 import { NoteEditor } from "./NoteEditor.tsx";
 import { toLocalDateInputValue } from "../Functions/DateFunctions.ts";
+import CreateType from "./CreateType.tsx";
 
 type CreateBlockProps = {
   className?: string;
@@ -12,10 +13,15 @@ type CreateBlockProps = {
   blockDate?: Date | null | undefined;
 };
 
-
 const CreateBlock = (props: CreateBlockProps) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
+  const [type, setType] = useState<String>();
+
+  const setTypehandler = (type: string) => {
+    setType(type);
+    console.log("Type set to:", type);
+  };
 
   const [date, setDate] = useState<Date | undefined>(
     props.createInsideBlock && props.blockDate ? props.blockDate : undefined
@@ -29,6 +35,7 @@ const CreateBlock = (props: CreateBlockProps) => {
       title,
       text,
       date: date ? new Date(date) : null,
+      type: type || "default",
     };
     const docRef = await db.add("Content", data); // db.add should return the docRef
 
@@ -105,6 +112,7 @@ const CreateBlock = (props: CreateBlockProps) => {
                 className="bg-white rounded px-2 py-1 border border-gray-300 focus:outline-none focus:border-amber-400 text-gray-800"
               />
             </div>
+            <CreateType setType={setTypehandler} />
             <div className="col-span-full">
               <button className=" text-white" onClick={handleCreate}>
                 Create

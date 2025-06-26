@@ -9,7 +9,14 @@ export type Content = {
   title: string;
   text: string;
   date?: Date | null;
+  type?: Type | null;
 };
+
+export type Type = {
+  id: string; 
+  name: string; 
+  icon: string ; 
+}
 
 export type BlockProps = {
   id: string;

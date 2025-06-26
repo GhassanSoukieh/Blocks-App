@@ -64,7 +64,7 @@ const InsideBlockView = (props: BlockDetailsProps) => {
 
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 pt-50">
       <BackPage />
       {contents.length > 0 ? (
         contents.map((content) => <ContentOut content={content} onDelete={handleDelete}/>)

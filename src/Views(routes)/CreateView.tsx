@@ -4,6 +4,7 @@ import db from "../../db";
 import { BlockProps, Content } from "../Types.ts";
 import CreateBlock from "../components/CreateBlock.tsx";
 import ContentOut from "../components/ContentOut";
+import { Type } from "../Types.ts";
 
 const CreateView = () => {
   const [contents, setContents] = useState<Content[]>([]);
