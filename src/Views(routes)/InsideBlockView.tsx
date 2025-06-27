@@ -62,12 +62,13 @@ const InsideBlockView = (props: BlockDetailsProps) => {
     setUpdate((prev) => !prev);
   };
 
-
   return (
     <div className="flex flex-col gap-4 pt-50">
       <BackPage />
       {contents.length > 0 ? (
-        contents.map((content) => <ContentOut content={content} onDelete={handleDelete}/>)
+        contents.map((content) => (
+          <ContentOut content={content} onDelete={handleDelete} />
+        ))
       ) : (
         <div className="flex items-center justify-center h-full">
           <p className="text-gray-500">No content available</p>

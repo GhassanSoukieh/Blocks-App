@@ -5,20 +5,34 @@ import { BlockProps, Content } from "../Types.ts";
 import CreateBlock from "../components/CreateBlock.tsx";
 import ContentOut from "../components/ContentOut";
 import { Type } from "../Types.ts";
+import Filter from "../components/Filter.tsx";
 
 const CreateView = () => {
   const [contents, setContents] = useState<Content[]>([]);
   const [refresh, setRefresh] = useState(false);
   const [noDateContent, setNoDateContent] = useState<Content[]>([]);
+  const [filters, setFilters] = useState<string[]>([]);
 
   const fetchContent = async () => {
     try {
       const allBlocks = await db.get("Content");
-      setContents(allBlocks ?? []);
+
+      const filteredBlocks =
+        filters.length > 0
+          ? (allBlocks ?? []).filter((block: any) =>
+              filters.includes(block.type)
+            )
+          : allBlocks ?? [];
+      setContents(filteredBlocks);
       console.log("Blocks fetched successfully");
     } catch (error) {
       console.error("Error fetching blocks:", error);
     }
+  };
+
+  const getSelectedFilter = (filters: string[]) => {
+    setFilters(filters);
+    console.log("Selected filters:", filters);
   };
 
   const handleDelete = () => {
@@ -32,7 +46,7 @@ const CreateView = () => {
 
   useEffect(() => {
     fetchContent();
-  }, []);
+  }, [filters]);
 
   useEffect(() => {
     fetchContent();
@@ -50,7 +64,9 @@ const CreateView = () => {
     <div className="grid grid-cols-12 pt-30">
       <Calendar className="col-span-2 col-start-1" contents={contents} />
 
-      <div className="col-start-5 items-center col-span-3 pt-30 flex gap-3 flex-col">
+      <Filter className="col-start-5" sendFilter={getSelectedFilter} />
+
+      <div className="col-start-7 items-center col-span-3 pt-30 flex gap-3 flex-col">
         {noDateContent.map((content, index) => (
           <ContentOut
             content={content}
@@ -60,7 +76,7 @@ const CreateView = () => {
         ))}
       </div>
 
-      <div className="col-start-9  col-span-1 pt-30  ">
+      <div className="col-start-10  col-span-1 pt-30  ">
         <div>
           <CreateBlock onCreate={handleCreate} />
         </div>

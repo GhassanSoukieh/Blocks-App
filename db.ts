@@ -32,13 +32,15 @@ const get = async (collectionName: any) => {
   }
 };
 const deleteData = async (collectionName: string, id: string) => {
-  const confirmed = window.confirm("Are you sure you want to delete this item?");
+  const confirmed = window.confirm(
+    "Are you sure you want to delete this item?"
+  );
   if (!confirmed) return;
 
   try {
     const docRef = doc(database, collectionName, id);
     await deleteDoc(docRef);
-    window.alert("Document deleted successfully!");
+
     console.log("Document deleted with ID: ", id);
   } catch (error) {
     window.alert("Error deleting document.");
@@ -66,7 +68,7 @@ const getDataForDate = async (date: Date): Promise<Content[]> => {
     console.error("Error fetching data for date: ", error);
     return [];
   }
-}
+};
 
 const db = { get, add, deleteData, update };
 export default db;

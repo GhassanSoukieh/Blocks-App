@@ -14,7 +14,8 @@ const CreateType = (props: CreateTypeProps) => {
 
   const fetchTypes = async () => {
     const data = await db.get("Types");
-    setTypes(data ?? []);
+    // Ensure each type has its id from Firebase
+    setTypes((data ?? []).map((type: any) => ({ ...type, id: type.id })));
   };
 
   useEffect(() => {
@@ -32,7 +33,7 @@ const CreateType = (props: CreateTypeProps) => {
       alert("Type name cannot be empty.");
       return;
     }
-    await db.add("Types", newType);
+    await db.add("Types", { name: newType.name, icon: newType.icon });
     fetchTypes();
     setNewType({ id: "", name: "", icon: "" });
     props.setType(newType.name);
