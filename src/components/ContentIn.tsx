@@ -67,7 +67,7 @@ const ContentIn = (props: ContentInProps) => {
       <EditorContent editor={titleEditor} className="text-2xl font-bold mb-2" />
       <EditorContent
         editor={editor}
-        className=" rounded p-2 text-start bg-blue-950 h-100 w-200 "
+        className=" rounded p-2 text-start bg-gray-900 h-100 w-200 "
       />
       <div className="text-gray-500 mt-2 w-full"></div>
 

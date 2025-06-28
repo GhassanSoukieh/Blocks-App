@@ -8,6 +8,7 @@ type FilterProps = {
 
 const Filter = (props: FilterProps) => {
   const [types, setTypes] = useState<string[]>([]);
+  const [selectedType, setSelectedType] = useState<string>("");
 
   const getFilter = async () => {
     const data = await db.get("Types");
@@ -21,13 +22,17 @@ const Filter = (props: FilterProps) => {
 
   return (
     <div className={props.className}>
-      <h1>Filter</h1>
-      <div className="flex flex-row flex-wrap gap-2 items-center p-2 bg-gray-100 dark:bg-gray-800 rounded-lg shadow">
+      <div className="flex flex-row whitespace-nowrap gap-2 items-center p-2 rounded-lg">
         <button
-          className="whitespace-nowrap text-xl"
+          className={
+            selectedType === ""
+              ? "text-white bg-green-400 border-0"
+              : "text-black bg-gray-600"
+          }
           onClick={() => {
             if (props.sendFilter) {
               props.sendFilter([]);
+              setSelectedType("");
             }
           }}
         >
@@ -38,10 +43,15 @@ const Filter = (props: FilterProps) => {
             onClick={() => {
               if (props.sendFilter) {
                 props.sendFilter([type]);
+                setSelectedType(type);
               }
             }}
             key={type || idx}
-            className="px-4 py-1 rounded-full bg-green-200 dark:bg-green-700 text-green-900 dark:text-green-100 font-semibold hover:bg-green-300 dark:hover:bg-green-600 transition border border-green-400 dark:border-green-600 shadow-sm focus:outline-none focus:ring-2 focus:ring-green-400"
+            className={
+              type === selectedType
+                ? "text-white bg-green-400"
+                : "text-black bg-amber-300"
+            }
           >
             {type}
           </button>

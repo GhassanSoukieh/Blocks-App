@@ -29,24 +29,42 @@ const ContentOut = (props: { content: Content; onDelete?: () => void }) => {
   };
 
   return (
-    <div className="flex flex-row gap-10" onClick={handleOnClick}>
-      <div className="border p-3 rounded-lg shadow-md bg-white dark:bg-gray-800 w-full text-sm whitespace-nowrap">
-        {props.content.title}
-      </div>
-      <div className="border-1 p-2 text-xs rounded-lg self-center flex items-center whitespace-nowrap">
-        {props.content?.type?.toString() ?? ""}
-      </div>
-      {showOptions && (
-        <div className="flex flex-row gap-10 items-center text-xl">
-          <FaEye onClick={handleEyeClick} />
+    <div>
+      <div
+        className="relative flex flex-row items-center gap-3 min-h-[48px]"
+        onClick={handleOnClick}
+      >
+        <div
+          className=" p-3 rounded-lg shadow-md text-white bg-gray-500 min-w-[200px] w-full text-sm whitespace-nowrap
+        transition-all duration-300
+        hover:scale-105"
+        >
+          {props.content.title}
+        </div>
+        <div className="bg-orange-400 p-2 text-xs rounded-lg self-center flex items-center whitespace-nowrap">
+          {props.content?.type?.toString() ?? ""}
+        </div>
+        <div
+          className={`absolute right-0 top-1/2 -translate-y-1/2 flex flex-row gap-6 items-center text-xl transition-transform duration-300 ${
+            showOptions
+              ? "translate-x-20 opacity-100"
+              : "translate -x-30 opacity-0 pointer-events-none"
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
+          <FaEye
+            onClick={handleEyeClick}
+            className="cursor-pointer hover:text-blue-500 transition-colors"
+          />
           <FaTrash
             onClick={() => {
               db.deleteData("Content", props.content.id);
               if (props.onDelete) props.onDelete();
             }}
+            className="cursor-pointer hover:text-red-500 transition-colors"
           />
         </div>
-      )}
+      </div>
     </div>
   );
 };

@@ -152,7 +152,7 @@ const Calendar = (props: CalendarProps) => {
 
   return (
     <>
-      <div className={`grid grid-cols-1 gap-2  ${props.className}`}>
+      <div className={`grid grid-cols-1 gap-2 ${props.className}`}>
         <div className="col-span-full  text-4xl felx flex-col">
           {currentYear}-{currentMonth + 1}-{currentDay}
           <div className="flex flex-row gap-10 justify-between pt-10">
@@ -199,7 +199,5 @@ const Calendar = (props: CalendarProps) => {
     </>
   );
 };
-
-
 
 export default Calendar;
