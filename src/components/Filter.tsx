@@ -22,7 +22,7 @@ const Filter = (props: FilterProps) => {
 
   return (
     <div className={props.className}>
-      <div className="flex flex-row whitespace-nowrap gap-2 items-center p-2 rounded-lg">
+      <div className="flex flex-row flex-wrap gap-2 items-center p-2 rounded-lg justify-center">
         <button
           className={
             selectedType === ""

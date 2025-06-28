@@ -31,7 +31,7 @@ const CreateView = () => {
   };
 
   const getSelectedFilter = (filters: string[]) => {
-    setFilters(filters);
+    -setFilters(filters);
     console.log("Selected filters:", filters);
   };
 
@@ -64,8 +64,8 @@ const CreateView = () => {
     <div className="grid grid-cols-12 pt-20">
       <Calendar className="col-span-2 col-start-1 h-20" contents={contents} />
 
-      <div className="col-start-6 col-span-2 flex flex-col gap-20 items-center h-full ">
-        <Filter sendFilter={getSelectedFilter} />
+      <div className="col-start-5 col-span-5 flex flex-col gap-2 items-center h-full">
+        <Filter sendFilter={getSelectedFilter} className="pb-20" />
         {noDateContent.map((content, index) => (
           <ContentOut
             content={content}
@@ -74,7 +74,7 @@ const CreateView = () => {
           />
         ))}
       </div>
-      <div className="col-start-12  col-span-1 ">
+      <div className="col-start-12 col-span-1 ">
         <CreateBlock onCreate={handleCreate} />
       </div>
     </div>
