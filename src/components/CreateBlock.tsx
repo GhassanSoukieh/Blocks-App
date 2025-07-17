@@ -66,7 +66,6 @@ const CreateBlock = (props: CreateBlockProps) => {
   }, [showCreateBlock]);
 
   useEffect(() => {
-    // If createInsideBlock or blockDate changes, update date accordingly
     if (props.createInsideBlock && props.blockDate) {
       setDate(props.blockDate);
     }

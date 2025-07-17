@@ -23,10 +23,10 @@ const CreateType = (props: CreateTypeProps) => {
     fetchTypes();
   }, []);
 
-  useEffect(() => {
-    setSelectedType(types.length > 0 ? types[0].name : "");
-    props.setType(selectedType);
-  }, []);
+  // useEffect(() => {
+  //   setSelectedType(types.length > 0 ? types[0].name : "");
+  //   props.setType(selectedType);
+  // }, []);
 
   const handleAddType = async () => {
     if (!newType.name.trim()) {
@@ -39,11 +39,11 @@ const CreateType = (props: CreateTypeProps) => {
     props.setType(newType.name);
   };
 
-  useEffect(() => {
-    if (types.length > 0 && !types.find((t) => t.id === selectedType)) {
-      setSelectedType(types[0].name);
-    }
-  }, [types, selectedType]);
+  // useEffect(() => {
+  //   if (types.length > 0 && !types.find((t) => t.id === selectedType)) {
+  //     setSelectedType(types[0].name);
+  //   }
+  // }, [types, selectedType]);
 
   return (
     <div className="flex flex-col items-center gap-4 p-6 bg-white dark:bg-gray-900 border border-gray-300 dark:border-gray-700 rounded-xl shadow-md max-w-md mx-auto mt-8">
@@ -66,6 +66,7 @@ const CreateType = (props: CreateTypeProps) => {
         </button>
       </div>
       <select
+        value={selectedType}
         className="w-full mt-2 px-3 py-2 rounded-lg border border-gray-300 dark:border-gray-600 bg-gray-100 dark:bg-gray-800 text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-400 transition"
         onChange={(e) => {
           const value = e.target.value;
@@ -74,7 +75,7 @@ const CreateType = (props: CreateTypeProps) => {
         }}
       >
         <option value="" disabled>
-          Select a type
+          Select a types
         </option>
         {types.map((type) => (
           <option key={type.id} value={type.name}>
