@@ -4,7 +4,6 @@ import { useNavigate } from "react-router-dom";
 import { convertDateToString } from "../Functions/DateFunctions.ts";
 import InsideBlockView from "../Views(routes)/InsideBlockView.tsx";
 
-
 const days = [
   "Monday",
   "Tuesday",

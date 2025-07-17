@@ -179,6 +179,8 @@ const Calendar = (props: CalendarProps) => {
             return isSameDay(ConvertedDate, day);
           });
 
+          const isWeekend = day.getDay() === 0 || day.getDay() === 6;
+
           return (
             <div className="flex flex-row items-center" key={index}>
               {isCurrentDate ? <div>{arrowRight}</div> : null}
@@ -190,7 +192,11 @@ const Calendar = (props: CalendarProps) => {
                 date={day}
                 key={day.toString()}
                 color={(contentDay?.length ?? 0) > 0 ? "#e03a15" : ""}
-                className="w-full"
+                className={
+                  "" +
+                  (isWeekend ? "bg-gray-600" : "bg-red") +
+                  " rounded-lg w-full"
+                }
               />
             </div>
           );
