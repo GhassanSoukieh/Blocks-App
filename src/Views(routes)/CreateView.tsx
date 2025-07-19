@@ -64,9 +64,9 @@ const CreateView = () => {
   return (
     <TypesProvider>
       <div className="grid grid-cols-12 pt-20">
-        <Calendar className="col-span-2 col-start-1 h-20" contents={contents} />
+        <Calendar className="col-span-5 col-start-1 h-20" contents={contents} />
 
-        <div className="col-start-5 col-span-5 flex flex-col gap-2 items-center h-full">
+        <div className="col-start-6 col-span-5 flex flex-col gap-2 items-center h-full">
           <Filter sendFilter={getSelectedFilter} className="pb-20" />
 
           {noDateContent.map((content, index) => (
