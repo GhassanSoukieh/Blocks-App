@@ -5,6 +5,7 @@ import PlusIcon from "../icons/plus.tsx";
 import { NoteEditor } from "./NoteEditor.tsx";
 import { toLocalDateInputValue } from "../Functions/DateFunctions.ts";
 import CreateType from "./CreateType.tsx";
+import { TypesProvider } from "./GlobalComponents/TypeProvider.tsx";
 
 type CreateBlockProps = {
   className?: string;
@@ -111,7 +112,9 @@ const CreateBlock = (props: CreateBlockProps) => {
                 className="bg-white rounded px-2 py-1 border border-gray-300 focus:outline-none focus:border-amber-400 text-gray-800"
               />
             </div>
+
             <CreateType setType={setTypehandler} />
+
             <div className="col-span-full">
               <button className=" text-white" onClick={handleCreate}>
                 Create

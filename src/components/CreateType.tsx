@@ -2,26 +2,18 @@ import { useEffect, useState } from "react";
 import db from "../../db.ts";
 import { Content } from "../Types.ts";
 import { Type } from "../Types.ts";
+import { useContext } from "react";
+import { TypesContext } from "./GlobalComponents/TypeProvider.tsx";
 
 type CreateTypeProps = {
   setType: (String: string) => void;
 };
 
 const CreateType = (props: CreateTypeProps) => {
-  const [types, setTypes] = useState<Type[]>([]);
+  const { types, setTypes, AddTypes } = useContext(TypesContext);
+
   const [newType, setNewType] = useState<Type>({ id: "", name: "", icon: "" });
   const [selectedType, setSelectedType] = useState<string>("");
-
-  const fetchTypes = async () => {
-    const data = await db.get("Types");
-    // Ensure each type has its id from Firebase
-    setTypes((data ?? []).map((type: any) => ({ ...type, id: type.id })));
-  };
-
-  useEffect(() => {
-    // once the component mounts, fetch the types
-    fetchTypes();
-  }, []);
 
   // useEffect(() => {
   //   setSelectedType(types.length > 0 ? types[0].name : "");
@@ -33,8 +25,8 @@ const CreateType = (props: CreateTypeProps) => {
       alert("Type name cannot be empty.");
       return;
     }
-    await db.add("Types", { name: newType.name, icon: newType.icon });
-    fetchTypes();
+    AddTypes(newType.name);
+
     setNewType({ id: "", name: "", icon: "" });
     props.setType(newType.name);
   };
@@ -78,9 +70,7 @@ const CreateType = (props: CreateTypeProps) => {
           Select a types
         </option>
         {types.map((type) => (
-          <option key={type.id} value={type.name}>
-            {type.name}
-          </option>
+          <option>{type}</option>
         ))}
       </select>
     </div>

@@ -71,4 +71,5 @@ const getDataForDate = async (date: Date): Promise<Content[]> => {
 };
 
 const db = { get, add, deleteData, update };
+
 export default db;

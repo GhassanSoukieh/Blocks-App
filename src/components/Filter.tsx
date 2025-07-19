@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useContext } from "react";
 import db from "../../db.ts";
+import { TypesContext } from "../components/GlobalComponents/TypeProvider";
 
 type FilterProps = {
   sendFilter?: (filter: string[]) => void;
@@ -7,18 +8,9 @@ type FilterProps = {
 };
 
 const Filter = (props: FilterProps) => {
-  const [types, setTypes] = useState<string[]>([]);
+  const { types, deleteType } = useContext(TypesContext);
+
   const [selectedType, setSelectedType] = useState<string>("");
-
-  const getFilter = async () => {
-    const data = await db.get("Types");
-    setTypes(data ? data.map((type: { name: string }) => type.name) : []);
-    console.log("Filter fetched:", data);
-  };
-
-  useEffect(() => {
-    getFilter();
-  }, []);
 
   return (
     <div className={props.className}>

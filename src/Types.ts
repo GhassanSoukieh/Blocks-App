@@ -13,10 +13,10 @@ export type Content = {
 };
 
 export type Type = {
-  id: string; 
-  name: string; 
-  icon: string ; 
-}
+  id: string;
+  name: string;
+  icon: string;
+};
 
 export type BlockProps = {
   id: string;

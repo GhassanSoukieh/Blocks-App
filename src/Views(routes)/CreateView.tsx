@@ -6,6 +6,7 @@ import CreateBlock from "../components/CreateBlock.tsx";
 import ContentOut from "../components/ContentOut";
 import { Type } from "../Types.ts";
 import Filter from "../components/Filter.tsx";
+import { TypesProvider } from "../components/GlobalComponents/TypeProvider.tsx";
 
 const CreateView = () => {
   const [contents, setContents] = useState<Content[]>([]);
@@ -61,23 +62,26 @@ const CreateView = () => {
   }, [contents]);
 
   return (
-    <div className="grid grid-cols-12 pt-20">
-      <Calendar className="col-span-2 col-start-1 h-20" contents={contents} />
+    <TypesProvider>
+      <div className="grid grid-cols-12 pt-20">
+        <Calendar className="col-span-2 col-start-1 h-20" contents={contents} />
 
-      <div className="col-start-5 col-span-5 flex flex-col gap-2 items-center h-full">
-        <Filter sendFilter={getSelectedFilter} className="pb-20" />
-        {noDateContent.map((content, index) => (
-          <ContentOut
-            content={content}
-            key={content.id}
-            onDelete={handleDelete}
-          />
-        ))}
+        <div className="col-start-5 col-span-5 flex flex-col gap-2 items-center h-full">
+          <Filter sendFilter={getSelectedFilter} className="pb-20" />
+
+          {noDateContent.map((content, index) => (
+            <ContentOut
+              content={content}
+              key={content.id}
+              onDelete={handleDelete}
+            />
+          ))}
+        </div>
+        <div className="col-start-12 col-span-1 ">
+          <CreateBlock onCreate={handleCreate} />
+        </div>
       </div>
-      <div className="col-start-12 col-span-1 ">
-        <CreateBlock onCreate={handleCreate} />
-      </div>
-    </div>
+    </TypesProvider>
   );
 };
 
