@@ -63,7 +63,7 @@ const CreateView = () => {
 
   return (
     <div className="grid grid-cols-12 pt-20">
-      <Calendar className="col-span-7 col-start-1" contents={contents} />
+      <Calendar className="col-span-7 col-start-4 h-100" contents={contents} />
 
       <div className="col-start-5 row-start-2 col-span-5 flex flex-col gap-2 items-center h-full pt-10">
         <Filter sendFilter={getSelectedFilter} className="pb-20" />
