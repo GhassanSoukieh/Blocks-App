@@ -152,8 +152,8 @@ const Calendar = (props: CalendarProps) => {
 
   return (
     <>
-      <div className={`grid grid-cols-6 gap-2 ${props.className}`}>
-        <div className="col-span-full  text-4xl felx flex-col">
+      <div className={`grid grid-cols-7 gap-2 ${props.className}`}>
+        <div className="col-span-full  text-4xl flex flex-col pb-10">
           {currentYear}-{currentMonth + 1}-{currentDay}
           <div className="flex flex-row gap-10 justify-between pt-10">
             <div onClick={prevMonth}>{arrowLeft}</div>
@@ -181,8 +181,14 @@ const Calendar = (props: CalendarProps) => {
 
           const isWeekend = day.getDay() === 0 || day.getDay() === 6;
 
+          const colStart = day.getDay() === 0 ? 7 : day.getDay();
+
           return (
-            <div className="flex flex-row items-center" key={index}>
+            // This return is only for the day box.
+            <div
+              className={`flex flex-row items-center col-start-${colStart}`}
+              key={index}
+            >
               {isCurrentDate ? <div>{arrowRight}</div> : null}
               <Day
                 id={day.toString()}

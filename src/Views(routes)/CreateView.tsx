@@ -62,26 +62,24 @@ const CreateView = () => {
   }, [contents]);
 
   return (
-    <TypesProvider>
-      <div className="grid grid-cols-12 pt-20">
-        <Calendar className="col-span-5 col-start-1 h-20" contents={contents} />
+    <div className="grid grid-cols-12 pt-20">
+      <Calendar className="col-span-7 col-start-1" contents={contents} />
 
-        <div className="col-start-6 col-span-5 flex flex-col gap-2 items-center h-full">
-          <Filter sendFilter={getSelectedFilter} className="pb-20" />
+      <div className="col-start-5 row-start-2 col-span-5 flex flex-col gap-2 items-center h-full pt-10">
+        <Filter sendFilter={getSelectedFilter} className="pb-20" />
 
-          {noDateContent.map((content, index) => (
-            <ContentOut
-              content={content}
-              key={content.id}
-              onDelete={handleDelete}
-            />
-          ))}
-        </div>
-        <div className="col-start-12 col-span-1 ">
-          <CreateBlock onCreate={handleCreate} />
-        </div>
+        {noDateContent.map((content, index) => (
+          <ContentOut
+            content={content}
+            key={content.id}
+            onDelete={handleDelete}
+          />
+        ))}
       </div>
-    </TypesProvider>
+      <div className="col-start-6 col-span-3 row-start-3 pt-10  ">
+        <CreateBlock onCreate={handleCreate} />
+      </div>
+    </div>
   );
 };
 
