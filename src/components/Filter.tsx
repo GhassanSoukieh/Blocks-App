@@ -14,7 +14,7 @@ const Filter = (props: FilterProps) => {
 
   return (
     <div className={props.className}>
-      <div className="flex flex-row flex-wrap gap-2 items-center p-2 rounded-lg justify-center">
+      <div className="flex flex-col flex-wrap gap-2 items-center p-2 rounded-lg justify-center text-sm">
         <button
           className={
             selectedType === ""
@@ -42,7 +42,7 @@ const Filter = (props: FilterProps) => {
             className={
               type === selectedType
                 ? "text-white bg-green-400"
-                : "text-black bg-amber-300"
+                : "text-black bg-gray-600"
             }
           >
             {type}

@@ -35,15 +35,30 @@ const Day = (props: BlockProps) => {
     }
   };
 
+  const currentDate = () => {
+    const today = new Date();
+    return (
+      today.getFullYear() === props.date?.getFullYear() &&
+      today.getMonth() === props.date?.getMonth() &&
+      today.getDate() === props.date?.getDate()
+    );
+  };
+
   return (
     <div
       onClick={() => {
         handleClick();
       }}
-      className={`border-1 transition duration-200 hover:scale-110  text-xs ${props.className} cursor-pointer`}
+      className={`border-1 transition duration-200 hover:scale-110  text-xs ${props.className} cursor-pointer `}
       style={{ backgroundColor: props.color || undefined }}
     >
-      {dateNumber}
+      {currentDate() ? (
+        <span className=" rounded-full border-1 border-white bg-white text-black">
+          {dateNumber}
+        </span>
+      ) : (
+        dateNumber
+      )}
       <div> {dayName}</div>
     </div>
   );

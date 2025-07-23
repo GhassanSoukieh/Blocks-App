@@ -180,16 +180,24 @@ const Calendar = (props: CalendarProps) => {
           });
 
           const isWeekend = day.getDay() === 0 || day.getDay() === 6;
-
           const colStart = day.getDay() === 0 ? 7 : day.getDay();
+
+          const colStartClasses = {
+            1: "col-start-1",
+            2: "col-start-2",
+            3: "col-start-3",
+            4: "col-start-4",
+            5: "col-start-5",
+            6: "col-start-6",
+            7: "col-start-7",
+          };
 
           return (
             // This return is only for the day box.
             <div
-              className={`flex flex-row items-center col-start-${colStart}`}
+              className={`flex flex-row items-center ${colStartClasses[colStart]}`}
               key={index}
             >
-              {isCurrentDate ? <div>{arrowRight}</div> : null}
               <Day
                 id={day.toString()}
                 content={

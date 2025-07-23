@@ -63,20 +63,18 @@ const CreateView = () => {
 
   return (
     <div className="grid grid-cols-12 pt-20">
-      <Calendar className="col-span-7 col-start-4 h-100" contents={contents} />
+      <Calendar className="col-span-7 col-start-2 h-100" contents={contents} />
 
-      <div className="col-start-5 row-start-2 col-span-5 flex flex-col gap-2 items-center h-full pt-10">
-        <Filter sendFilter={getSelectedFilter} className="pb-20" />
-
-        {noDateContent.map((content, index) => (
+      <div className="col-start-11 col-span-2 flex flex-col gap-2 items-center h-full pt-20">
+        <Filter sendFilter={getSelectedFilter} />
+        {/* {noDateContent.map((content, index) => (
           <ContentOut
             content={content}
             key={content.id}
             onDelete={handleDelete}
-          />
-        ))}
+          /> */}
       </div>
-      <div className="col-start-6 col-span-3 row-start-3 pt-10  ">
+      <div className="col-start-6 col-span-1 row-start-3 pt-10  ">
         <CreateBlock onCreate={handleCreate} />
       </div>
     </div>
