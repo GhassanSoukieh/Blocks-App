@@ -49,7 +49,7 @@ const Day = (props: BlockProps) => {
       onClick={() => {
         handleClick();
       }}
-      className={`border-1 transition duration-200 hover:scale-110  text-xs ${props.className} cursor-pointer `}
+      className={`border-1 transition duration-200 hover:scale-110  text-lg ${props.className} cursor-pointer min-h-20 `}
       style={{ backgroundColor: props.color || undefined }}
     >
       {currentDate() ? (

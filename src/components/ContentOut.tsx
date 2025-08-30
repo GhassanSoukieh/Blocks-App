@@ -1,5 +1,5 @@
-import React, { use, useEffect, useState } from "react";
-import { FaTrash, FaEye } from "react-icons/fa";
+import React, { use, useContext, useEffect, useState } from "react";
+import { FaTrash, FaEye, FaCopy } from "react-icons/fa";
 
 import { Content } from "../Types.ts";
 import { useEditor } from "@tiptap/react";
@@ -8,11 +8,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { useDraggable } from "@dnd-kit/core";
 import { fetchAndFilterContentByDate } from "../Functions/DateFunctions";
 import db from "../../db.ts";
+import { copyContext } from "./GlobalComponents/CopyProvider.tsx";
+import { toast } from "react-toastify";
 
 const ContentOut = (props: { content: Content; onDelete?: () => void }) => {
   const location = useLocation();
   const contentFromState = location.state?.content || {};
   const [showOptions, setShowOptions] = useState(false);
+  const { copyContent, setCopyContent } = useContext(copyContext);
 
   const [contents, setContents] = useState<Content>(contentFromState);
 
@@ -26,6 +29,10 @@ const ContentOut = (props: { content: Content; onDelete?: () => void }) => {
     navigator(`/note/${props.content.id}`, {
       state: { content: props.content },
     });
+  };
+
+  const handleCopy = (content: Content) => {
+    setCopyContent(content);
   };
 
   return (
@@ -47,8 +54,8 @@ const ContentOut = (props: { content: Content; onDelete?: () => void }) => {
         <div
           className={`absolute right-0 top-1/2 -translate-y-1/2 flex flex-row gap-6 items-center text-xl transition-transform duration-300 ${
             showOptions
-              ? "translate-x-20 opacity-100"
-              : "translate -x-30 opacity-0 pointer-events-none"
+              ? "translate-x-40 opacity-100"
+              : "translate -x-40 opacity-0 pointer-events-none"
           }`}
           onClick={(e) => e.stopPropagation()}
         >
@@ -62,6 +69,13 @@ const ContentOut = (props: { content: Content; onDelete?: () => void }) => {
               if (props.onDelete) props.onDelete();
             }}
             className="cursor-pointer hover:text-red-500 transition-colors"
+          />
+          <FaCopy
+            className="hover:text-green-500 transition-colors cursor-pointer"
+            onClick={() => {
+              handleCopy(props.content);
+              toast("Copied!");
+            }}
           />
         </div>
       </div>
