@@ -14,14 +14,28 @@ type CreateBlockProps = {
   blockDate?: Date | null | undefined;
 };
 
+const colors = {
+  red: "bg-red-500",
+  green: "bg-green-500",
+  blue: "bg-blue-500",
+  yellow: "bg-yellow-500",
+  gray: "bg-gray-500",
+};
+
 const CreateBlock = (props: CreateBlockProps) => {
   const [title, setTitle] = useState("");
   const [text, setText] = useState("");
   const [type, setType] = useState<String>();
+  const [color, setColor] = useState<string | null>(null);
 
   const setTypehandler = (type: string) => {
     setType(type);
     console.log("Type set to:", type);
+  };
+
+  const onColorClick = (color: string) => {
+    setColor(color);
+    console.log("Color set to:", color);
   };
 
   const [date, setDate] = useState<Date | undefined>(
@@ -37,6 +51,7 @@ const CreateBlock = (props: CreateBlockProps) => {
       text,
       date: date ? new Date(date) : null,
       type: type || "default",
+      color: color || null,
     };
     const docRef = await db.add("Content", data); // db.add should return the docRef
 
@@ -111,6 +126,40 @@ const CreateBlock = (props: CreateBlockProps) => {
                 }
                 className="bg-white rounded px-2 py-1 border border-gray-300 focus:outline-none focus:border-amber-400 text-gray-800"
               />
+            </div>
+
+            <div className="text-2xl flex-row flex gap-1">
+              set the color
+              <div
+                onClick={() => onColorClick(colors.red)}
+                className={`${colors.red} p-2 w-1 ${
+                  color === colors.red ? "border-4 border-white" : ""
+                }`}
+              ></div>
+              <div
+                onClick={() => onColorClick(colors.green)}
+                className={`${colors.green} p-2 w-1 ${
+                  color === colors.green ? "border-4 border-white" : ""
+                }`}
+              ></div>
+              <div
+                onClick={() => onColorClick(colors.yellow)}
+                className={`${colors.yellow} p-2 w-1 ${
+                  color === colors.yellow ? "border-4 border-white" : ""
+                }`}
+              ></div>
+              <div
+                onClick={() => onColorClick(colors.blue)}
+                className={`${colors.blue} p-2 w-1 ${
+                  color === colors.blue ? "border-4 border-white" : ""
+                }`}
+              ></div>
+              <div
+                onClick={() => onColorClick(colors.gray)}
+                className={`${colors.gray} p-2 w-1 ${
+                  color === colors.gray ? "border-4 border-white" : ""
+                }`}
+              ></div>
             </div>
 
             <CreateType setType={setTypehandler} />

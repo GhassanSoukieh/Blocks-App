@@ -59,7 +59,19 @@ const Day = (props: BlockProps) => {
       ) : (
         dateNumber
       )}
-      <div> {dayName}</div>
+      <div>
+        {" "}
+        {dayName}
+        {props.content && props.content.length > 0 && (
+          <div className={`text-xs `}>
+            {props.content.map((item) => (
+              <div className={`${item.color} rounded-2xl`} key={item.id}>
+                {item.title}
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

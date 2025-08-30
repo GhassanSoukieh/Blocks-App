@@ -67,12 +67,13 @@ const CreateView = () => {
 
       <div className="col-start-11 col-span-2 flex flex-col gap-2 items-center h-full pt-20">
         <Filter sendFilter={getSelectedFilter} />
-        {/* {noDateContent.map((content, index) => (
+        {noDateContent.map((content, index) => (
           <ContentOut
             content={content}
             key={content.id}
             onDelete={handleDelete}
-          /> */}
+          /> // Use content.id as key for better uniqueness
+        ))}
       </div>
       <div className="col-start-6 col-span-1 row-start-3 pt-10  ">
         <CreateBlock onCreate={handleCreate} />

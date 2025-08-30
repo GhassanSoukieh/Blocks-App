@@ -10,6 +10,7 @@ export type Content = {
   text: string;
   date?: Date | null;
   type?: Type | null;
+  color?: string | null;
 };
 
 export type Type = {

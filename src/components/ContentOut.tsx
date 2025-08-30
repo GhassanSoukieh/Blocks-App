@@ -35,9 +35,9 @@ const ContentOut = (props: { content: Content; onDelete?: () => void }) => {
         onClick={handleOnClick}
       >
         <div
-          className=" p-3 rounded-lg shadow-md text-white bg-gray-500 min-w-[200px] w-full text-sm whitespace-nowrap
+          className={` p-3 rounded-lg shadow-md text-white ${props.content.color} min-w-[200px] w-full text-sm whitespace-nowrap
         transition-all duration-300
-        hover:scale-105"
+        hover:scale-105`}
         >
           {props.content.title}
         </div>

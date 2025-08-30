@@ -76,6 +76,7 @@ const Calendar = (props: CalendarProps) => {
   const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
+  const [color, setColor] = useState("");
 
   const isSameDay = (a: Date, b: Date) => {
     return (
@@ -154,11 +155,13 @@ const Calendar = (props: CalendarProps) => {
     <>
       <div className={`grid grid-cols-7 gap-2 ${props.className}`}>
         <div className="col-span-full  text-4xl flex flex-col pb-10">
-          {currentYear}-{currentMonth + 1}-{currentDay}
+          <div className="border-2 rounded-2xl p-3 cursor-default">
+            {currentYear}-{currentMonth + 1}-{currentDay}
+          </div>
           <div className="flex flex-row gap-10 justify-between pt-10">
             <div onClick={prevMonth}>{arrowLeft}</div>
             <div
-              className="text-sm rounded-3xl border-1 p-4 hover:bg-green-500 transition duration-300 "
+              className="text-lg rounded-3xl border-1 p-4 hover:bg-green-500 transition duration-300 cursor-pointer"
               onClick={() => {
                 showCurrentDate();
               }}
@@ -178,6 +181,8 @@ const Calendar = (props: CalendarProps) => {
             const ConvertedDate = toDate(content.date);
             return isSameDay(ConvertedDate, day);
           });
+
+          const contentTitle = contentDay?.[0]?.title ?? "";
 
           const isWeekend = day.getDay() === 0 || day.getDay() === 6;
           const colStart = day.getDay() === 0 ? 7 : day.getDay();
@@ -205,7 +210,7 @@ const Calendar = (props: CalendarProps) => {
                 }
                 date={day}
                 key={day.toString()}
-                color={(contentDay?.length ?? 0) > 0 ? "#e03a15" : ""}
+                color={contentDay && contentDay.length > 0 ? "#662E9B" : ""}
                 className={
                   "" +
                   (isWeekend ? "bg-gray-600" : "bg-red") +
