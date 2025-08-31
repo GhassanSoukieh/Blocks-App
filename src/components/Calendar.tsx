@@ -3,6 +3,8 @@ import Day from "./Day.tsx";
 import db from "../../db.ts";
 import { BlockProps, Content, CalendarProps } from "../Types.ts";
 import { Timestamp } from "firebase/firestore";
+import { useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const arrowLeft = (
   <svg
@@ -72,8 +74,13 @@ const Calendar = (props: CalendarProps) => {
     "December",
   ];
 
+  const { currentMonthParam } = useParams();
   const [currentDate, setCurrentDate] = useState(new Date());
-  const [currentMonth, setCurrentMonth] = useState(currentDate.getMonth());
+  const [currentMonth, setCurrentMonth] = useState(
+    currentMonthParam
+      ? parseInt(currentMonthParam, 10) - 1
+      : new Date().getMonth()
+  );
   const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
   const [color, setColor] = useState("");
@@ -86,12 +93,15 @@ const Calendar = (props: CalendarProps) => {
     );
   };
 
+  const navigator = useNavigate();
+
   const showCurrentDate = () => {
     const now = new Date();
     setCurrentDate(now);
     setCurrentMonth(now.getMonth());
     setCurrentYear(now.getFullYear());
     setCurrentDay(now.getDate());
+    navigator(`/create/${now.getMonth() + 1}`);
   };
 
   const monthName = months[currentDate.getMonth()];
@@ -118,21 +128,33 @@ const Calendar = (props: CalendarProps) => {
   const calander = calendar(currentMonth);
 
   const nextMonth = () => {
+    let nextMonthNum,
+      nextYear = currentYear;
     if (currentMonth === 11) {
+      nextMonthNum = 1; // January
+      nextYear = currentYear + 1;
       setCurrentMonth(0);
-      setCurrentYear(currentYear + 1);
+      setCurrentYear(nextYear);
     } else {
+      nextMonthNum = currentMonth + 2; // +1 for next month, +1 for 1-indexed
       setCurrentMonth(currentMonth + 1);
     }
+    navigator(`/create/${nextMonthNum}`);
   };
 
   const prevMonth = () => {
+    let prevMonthNum,
+      prevYear = currentYear;
     if (currentMonth === 0) {
+      prevMonthNum = 12; // December
+      prevYear = currentYear - 1;
       setCurrentMonth(11);
-      setCurrentYear(currentYear - 1);
+      setCurrentYear(prevYear);
     } else {
+      prevMonthNum = currentMonth; // already 1-indexed
       setCurrentMonth(currentMonth - 1);
     }
+    navigator(`/create/${prevMonthNum}`);
   };
 
   useEffect(() => {
@@ -151,15 +173,21 @@ const Calendar = (props: CalendarProps) => {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, []);
 
+  useEffect(() => {
+    console.log("gfgfg", currentMonthParam);
+  }, [currentMonthParam]);
+
   return (
     <>
       <div className={`grid grid-cols-7 gap-2 ${props.className}`}>
         <div className="col-span-full  text-4xl flex flex-col pb-10">
           <div className="border-2 rounded-2xl p-3 cursor-default">
-            {currentYear}-{currentMonth + 1}-{currentDay}
+            {currentYear}-{currentMonth + 1}
           </div>
           <div className="flex flex-row gap-10 justify-between pt-10">
-            <div onClick={prevMonth}>{arrowLeft}</div>
+            <div className="cursor-pointer" onClick={prevMonth}>
+              {arrowLeft}
+            </div>
             <div
               className="text-lg rounded-3xl border-1 p-4 hover:bg-green-500 transition duration-300 cursor-pointer"
               onClick={() => {
@@ -168,7 +196,9 @@ const Calendar = (props: CalendarProps) => {
             >
               Today
             </div>
-            <div onClick={nextMonth}>{arrowRight}</div>
+            <div className="cursor-pointer" onClick={nextMonth}>
+              {arrowRight}
+            </div>
           </div>
         </div>
         {calander.map((day, index) => {
@@ -204,6 +234,7 @@ const Calendar = (props: CalendarProps) => {
               key={index}
             >
               <Day
+                returningDate={currentDate}
                 id={day.toString()}
                 content={
                   contentDay && contentDay.length > 0 ? contentDay : null

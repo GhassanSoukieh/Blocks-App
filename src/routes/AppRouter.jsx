@@ -11,7 +11,7 @@ function AppRouter() {
       <Navbar />
       <Routes>
         <Route path="/home" element={<Home />} />
-        <Route path="/create" element={<CreateView />} />
+        <Route path="/create/:currentMonthParam" element={<CreateView />} />
         <Route path="/block/:date" element={<InsideBlockView />} />
         <Route path="/note/:id" element={<ContentIn />} />
       </Routes>

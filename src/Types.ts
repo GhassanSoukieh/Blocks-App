@@ -26,11 +26,13 @@ export type BlockProps = {
   status?: string | null;
   className?: string | null;
   content?: Content[] | null;
+  returningDate?: Date | null;
 };
 
 export type CalendarProps = {
   className?: string;
   contents?: Content[];
+  currentDate?: Date | null;
 };
 
 export type BlockDetailsProps = {

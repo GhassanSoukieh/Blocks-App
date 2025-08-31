@@ -30,7 +30,11 @@ const Day = (props: BlockProps) => {
   const handleClick = () => {
     if (slash) {
       navigate(`/block/${slash}`, {
-        state: { content: props.content, date: props.date },
+        state: {
+          content: props.content,
+          date: props.date,
+          returningDate: props.returningDate,
+        },
       });
     }
   };
