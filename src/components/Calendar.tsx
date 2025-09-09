@@ -73,15 +73,31 @@ const Calendar = (props: CalendarProps) => {
     "November",
     "December",
   ];
+  const extractMonthFromParam = (param: string | undefined) => {
+    if (!param) return null;
+    const [monthStr] = param.split("-");
+    const month = parseInt(monthStr, 10);
+    return isNaN(month) ? null : month;
+  };
 
-  const { currentMonthParam } = useParams();
+  const extractYearFromParam = (param: string | undefined) => {
+    if (!param) return null;
+    const parts = param.split("-");
+    if (parts.length < 2) return null;
+    const yearStr = parts[1];
+    const year = parseInt(yearStr, 10);
+    return isNaN(year) ? null : year;
+  };
+
+  const { currentMonthAndyear } = useParams();
   const [currentDate, setCurrentDate] = useState(new Date());
+  const extractedMonth = extractMonthFromParam(currentMonthAndyear);
   const [currentMonth, setCurrentMonth] = useState(
-    currentMonthParam
-      ? parseInt(currentMonthParam, 10) - 1
-      : new Date().getMonth()
+    extractedMonth !== null ? extractedMonth - 1 : new Date().getMonth()
   );
-  const [currentYear, setCurrentYear] = useState(currentDate.getFullYear());
+  const [currentYear, setCurrentYear] = useState(
+    extractYearFromParam(currentMonthAndyear) || new Date().getFullYear()
+  );
   const [currentDay, setCurrentDay] = useState(currentDate.getDate());
   const [color, setColor] = useState("");
 
@@ -101,7 +117,7 @@ const Calendar = (props: CalendarProps) => {
     setCurrentMonth(now.getMonth());
     setCurrentYear(now.getFullYear());
     setCurrentDay(now.getDate());
-    navigator(`/create/${now.getMonth() + 1}`);
+    navigator(`/create/${now.getMonth() + 1}-${now.getFullYear()}`);
   };
 
   const monthName = months[currentDate.getMonth()];
@@ -139,7 +155,7 @@ const Calendar = (props: CalendarProps) => {
       nextMonthNum = currentMonth + 2; // +1 for next month, +1 for 1-indexed
       setCurrentMonth(currentMonth + 1);
     }
-    navigator(`/create/${nextMonthNum}`);
+    navigator(`/create/${nextMonthNum}-${nextYear}`);
   };
 
   const prevMonth = () => {
@@ -154,7 +170,7 @@ const Calendar = (props: CalendarProps) => {
       prevMonthNum = currentMonth; // already 1-indexed
       setCurrentMonth(currentMonth - 1);
     }
-    navigator(`/create/${prevMonthNum}`);
+    navigator(`/create/${prevMonthNum}-${prevYear}`);
   };
 
   useEffect(() => {
@@ -174,8 +190,8 @@ const Calendar = (props: CalendarProps) => {
   }, []);
 
   useEffect(() => {
-    console.log("gfgfg", currentMonthParam);
-  }, [currentMonthParam]);
+    console.log("Month is now:", currentMonth + 1, "Year is now:", currentYear);
+  }, [currentMonth, currentYear]);
 
   return (
     <>
